@@ -10,7 +10,7 @@ import com.example.clean_quiz.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-// val actionBar = supportActionBar
+    val actionBar = supportActionBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
