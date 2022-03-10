@@ -1,5 +1,6 @@
 package com.example.clean_quiz
 
+import android.app.ProgressDialog.show
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -28,15 +29,12 @@ class MainActivity : AppCompatActivity() {
 
         val helpOptionId = menu?.findItem(R.id.helpOption)
 
-        if (helpOptionId != null) {
-            helpOptionId.setOnMenuItemClickListener {
-               // dont need on clikc method as we are not using the button view
-            DialogFragment
-                val alert = AlertDialog.Builder(applicationContext)
+        helpOptionId?.setOnMenuItemClickListener {
+            // dont need on clikc method as we are not using the button view
+           val helpDialog = HelpDialogFragment(supportFragmentManager, )
+            val helpDialog = HelpDialogFragment.show()
+            HelpDialogFragment.show()
 
-                        alert.setMessage()
-
-            }
         }
         return super.onCreateOptionsMenu(menu)
     }

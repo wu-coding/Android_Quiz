@@ -1,6 +1,7 @@
 package com.example.clean_quiz
 
 import android.widget.TextView
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
@@ -15,7 +16,15 @@ class QuizViewModel : ViewModel() {
     val currentQuestion: MutableLiveData<Question_Answers> = MutableLiveData<Question_Answers>()
 
 
-    private var score: Int = 0
+    private var rightScore: LiveData<Int>
+    val rightScore
+    get() {
+
+        }
+        set(value) = 0
+
+    //https://kotlinlang.org/docs/properties.html#declaring-properties
+
     private var wrongScore: Int = 0
 
 
@@ -33,7 +42,7 @@ class QuizViewModel : ViewModel() {
 
     fun checkAnswer(position: Int) {
         if (currentQuestion.value!!.answerList.get(position).check) {
-            score++
+            rightScore++
             if (quizData.size > 0) {
                 currentQuestion.setValue(quizData.removeFirst())
             } else {

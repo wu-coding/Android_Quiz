@@ -17,6 +17,7 @@ class HelpDialogFragment : DialogFragment(R.layout.help_dialog_layout), Lifecycl
         AlertDialog.Builder(context)
                 .setTitle("Help")
                 .setMessage("This is a basic quiz application. Select from multiple questions. Score will be totaled ")
+                .create()
         return super.onCreateDialog(savedInstanceState)
     }
 }
