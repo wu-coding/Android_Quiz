@@ -4,14 +4,16 @@ import android.app.ProgressDialog.show
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
+import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.FragmentManager
 import com.example.clean_quiz.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    val actionBar = supportActionBar
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,6 +21,7 @@ class MainActivity : AppCompatActivity() {
         //for main
         setContentView(binding.root)
         setSupportActionBar(binding.topToolbar)
+      //  val actionBar = supportActionBar
 
     }
 
@@ -30,14 +33,14 @@ class MainActivity : AppCompatActivity() {
         val helpOptionId = menu?.findItem(R.id.helpOption)
 
         helpOptionId?.setOnMenuItemClickListener {
-            // dont need on clikc method as we are not using the button view
-           val helpDialog = HelpDialogFragment(supportFragmentManager, )
-            val helpDialog = HelpDialogFragment.show()
-            HelpDialogFragment.show()
-
+            val dialogHelp = HelpDialogFragment()
+            dialogHelp.show(supportFragmentManager, "HelpAlertDialog")
+       //     HelpDialogFragment().show(supportFragmentManager, "HelpAlertDialog")
+            true
         }
         return super.onCreateOptionsMenu(menu)
     }
 
 
 }
+

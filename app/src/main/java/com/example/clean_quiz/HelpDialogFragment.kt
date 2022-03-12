@@ -10,7 +10,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.savedstate.SavedStateRegistryOwner
 
-class HelpDialogFragment : DialogFragment(R.layout.help_dialog_layout), LifecycleOwner, ViewModelStoreOwner, HasDefaultViewModelProviderFactory, SavedStateRegistryOwner, ActivityResultCaller{
+class HelpDialogFragment( layoutId: Int = R.layout.help_dialog_layout) : DialogFragment(), LifecycleOwner, ViewModelStoreOwner, HasDefaultViewModelProviderFactory, SavedStateRegistryOwner, ActivityResultCaller{
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         // Builder pattern

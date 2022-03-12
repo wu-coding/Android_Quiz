@@ -15,17 +15,8 @@ class QuizViewModel : ViewModel() {
 
     val currentQuestion: MutableLiveData<Question_Answers> = MutableLiveData<Question_Answers>()
 
-
-    private var rightScore: LiveData<Int>
-    val rightScore
-    get() {
-
-        }
-        set(value) = 0
-
-    //https://kotlinlang.org/docs/properties.html#declaring-properties
-
-    private var wrongScore: Int = 0
+    private var rightScore:MutableLiveData<Int> = MutableLiveData<Int>(0)
+    private var wrongScore:MutableLiveData<Int> = MutableLiveData<Int>(0)
 
 
     fun loadQuestion(question: TextView) {
@@ -42,7 +33,7 @@ class QuizViewModel : ViewModel() {
 
     fun checkAnswer(position: Int) {
         if (currentQuestion.value!!.answerList.get(position).check) {
-            rightScore++
+            rightScore.value = (rightScore.value)?.plus(1)
             if (quizData.size > 0) {
                 currentQuestion.setValue(quizData.removeFirst())
             } else {
@@ -50,7 +41,7 @@ class QuizViewModel : ViewModel() {
                 TODO("Fragment Navigation")
             }
         } else {
-            wrongScore++
+            wrongScore.value = (wrongScore.value)?.plus(1)
         }
     }
 
