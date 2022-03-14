@@ -1,14 +1,9 @@
 package com.example.clean_quiz
 
-import android.app.ProgressDialog.show
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
-import android.view.View
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.FragmentManager
 import com.example.clean_quiz.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -21,6 +16,8 @@ class MainActivity : AppCompatActivity() {
         //for main
         setContentView(binding.root)
         setSupportActionBar(binding.topToolbar)
+
+        val navHostId = supportFragmentManager.findFragmentById(R.id.nav_graph)
       //  val actionBar = supportActionBar
 
     }
@@ -33,9 +30,9 @@ class MainActivity : AppCompatActivity() {
         val helpOptionId = menu?.findItem(R.id.helpOption)
 
         helpOptionId?.setOnMenuItemClickListener {
-            val dialogHelp = HelpDialogFragment()
-            dialogHelp.show(supportFragmentManager, "HelpAlertDialog")
-       //     HelpDialogFragment().show(supportFragmentManager, "HelpAlertDialog")
+         //   val dialogHelp = HelpDialogFragment()
+       //     dialogHelp.show(supportFragmentManager, "HelpAlertDialog")
+            HelpDialogFragment().show(supportFragmentManager, "HelpAlertDialog")
             true
         }
         return super.onCreateOptionsMenu(menu)

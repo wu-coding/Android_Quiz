@@ -53,6 +53,7 @@ class QuizFragment : Fragment() {
         viewModel.currentQuestion.observe(viewLifecycleOwner,  {
             recyclerView.adapter?.notifyDataSetChanged()
             viewModel.loadQuestion(displayQuestion)
+            // Navigation
         })
     }
 

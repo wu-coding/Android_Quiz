@@ -1,7 +1,6 @@
 package com.example.clean_quiz
 
 import android.widget.TextView
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
@@ -37,7 +36,7 @@ class QuizViewModel : ViewModel() {
             if (quizData.size > 0) {
                 currentQuestion.setValue(quizData.removeFirst())
             } else {
-         //       FragmentNav
+         //       FragmentNav Easier to observe right score in main and change
                 TODO("Fragment Navigation")
             }
         } else {
