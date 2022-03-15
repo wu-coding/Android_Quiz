@@ -10,13 +10,21 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.savedstate.SavedStateRegistryOwner
 
-class HelpDialogFragment( layoutId: Int = R.layout.help_dialog_layout) : DialogFragment(), LifecycleOwner, ViewModelStoreOwner, HasDefaultViewModelProviderFactory, SavedStateRegistryOwner, ActivityResultCaller{
+class HelpDialogFragment() : DialogFragment(), LifecycleOwner, ViewModelStoreOwner, HasDefaultViewModelProviderFactory, SavedStateRegistryOwner, ActivityResultCaller{
 
+    /*
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.help_dialog_layout, container, false)
+    }
+*/
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         // Builder pattern
-        AlertDialog.Builder(context)
+   //     val inflater = requireActivity().layoutInflater
+
+        AlertDialog.Builder(requireContext())
                 .setTitle("Help")
                 .setMessage("This is a basic quiz application. Select from multiple questions. Score will be totaled ")
+         //       .setView(layoutInflater.inflate(R.layout.help_dialog_layout, view?.parent,false))
                 .create()
         return super.onCreateDialog(savedInstanceState)
     }
