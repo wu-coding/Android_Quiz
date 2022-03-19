@@ -3,6 +3,8 @@ package com.example.clean_quiz
 import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
+import android.view.View
+import android.view.ViewGroup
 import androidx.activity.result.ActivityResultCaller
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.HasDefaultViewModelProviderFactory
@@ -19,13 +21,13 @@ class HelpDialogFragment() : DialogFragment(), LifecycleOwner, ViewModelStoreOwn
 */
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         // Builder pattern
-   //     val inflater = requireActivity().layoutInflater
-
-        AlertDialog.Builder(requireContext())
+        return AlertDialog.Builder(requireContext())
                 .setTitle("Help")
                 .setMessage("This is a basic quiz application. Select from multiple questions. Score will be totaled ")
-         //       .setView(layoutInflater.inflate(R.layout.help_dialog_layout, view?.parent,false))
+        //        .setView(layoutInflater.inflate(R.layout.help_dialog_layout, activity?.findViewById(R.id.frametest) ,true))
+                //Figure out why FrameLayout in Main activity has parent? or use Remove View
                 .create()
-        return super.onCreateDialog(savedInstanceState)
+
+      //  return super.onCreateDialog(savedInstanceState)
     }
 }

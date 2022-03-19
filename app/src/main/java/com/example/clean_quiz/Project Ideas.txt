@@ -1,0 +1,10 @@
+-SMS or share
+-Database to store results?
+-Quiz API?
+
+retrofit
+and moshi
+
+https://quizapi.io/clientarea/settings/token
+hcUZqLCh8uTaXt121DQd5IQ7wv5GFIVA5YlaPxy4
+

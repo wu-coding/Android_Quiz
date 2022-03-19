@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,7 +20,7 @@ class QuizFragment : Fragment() {
     }
 // LinearLayoutManager(Context context)
 
-    private lateinit var viewModel: QuizViewModel
+    private val viewModel: QuizViewModel by activityViewModels()
     private lateinit var recyclerView:RecyclerView
     private lateinit var binding:QuizFragmentBinding
     lateinit var displayQuestion:TextView
@@ -38,7 +39,7 @@ class QuizFragment : Fragment() {
         //Replace with view-binding later
         displayQuestion = binding.questionText
 
-        viewModel = ViewModelProvider(this).get(QuizViewModel::class.java)
+
 
         viewModel.apply {
             loadAnswers()
@@ -47,14 +48,19 @@ class QuizFragment : Fragment() {
         recyclerView = view?.findViewById(R.id.quiz_recyclerView) ?: throw Exception("recyclerview findview error")
         recyclerView.apply {
             layoutManager = LinearLayoutManager(activity?.applicationContext, LinearLayoutManager.VERTICAL, false)
-            adapter = QuizViewAdapter (viewModel.currentQuestion, { answerCheck: Int -> viewModel.checkAnswer(answerCheck) })
+            adapter = QuizViewAdapter (viewModel.currentQuestion) { answerCheck: Int ->
+                viewModel.checkAnswer(
+                    answerCheck
+                )
+            }
         }
 
-        viewModel.currentQuestion.observe(viewLifecycleOwner,  {
+        viewModel.currentQuestion.observe(viewLifecycleOwner) {
             recyclerView.adapter?.notifyDataSetChanged()
             viewModel.loadQuestion(displayQuestion)
             // Navigation
-        })
+        }
+
     }
 
 }

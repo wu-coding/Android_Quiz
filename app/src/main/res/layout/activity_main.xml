@@ -27,4 +27,11 @@
         app:navGraph="@navigation/nav_graph"
         tools:layout_editor_absoluteX="16dp" />
 
+    <FrameLayout
+        android:id="@+id/frametest"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </FrameLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

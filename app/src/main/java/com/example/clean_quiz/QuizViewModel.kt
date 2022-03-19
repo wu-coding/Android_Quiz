@@ -38,10 +38,15 @@ class QuizViewModel : ViewModel() {
             } else {
          //       FragmentNav Easier to observe right score in main and change
                 TODO("Fragment Navigation")
+                // pass the resource id of fragment you want to navigate to callback main
             }
         } else {
             wrongScore.value = (wrongScore.value)?.plus(1)
         }
+    }
+
+    fun navigationCallback(){
+
     }
 
 }
