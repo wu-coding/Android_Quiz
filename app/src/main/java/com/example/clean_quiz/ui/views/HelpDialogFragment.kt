@@ -1,10 +1,8 @@
-package com.example.clean_quiz
+package com.example.clean_quiz.ui.views
 
 import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
-import android.view.View
-import android.view.ViewGroup
 import androidx.activity.result.ActivityResultCaller
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.HasDefaultViewModelProviderFactory

@@ -1,4 +1,4 @@
-package com.example.quiz
+package com.example.clean_quiz.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +12,7 @@ import com.example.clean_quiz.R
 
 class QuizViewAdapter(private val quizData: MutableLiveData<Question_Answers>, private val OnClickCallback: (position: Int) -> Unit) : RecyclerView.Adapter<QuizViewAdapter.ViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):QuizViewAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.quiz_fragment_item, parent, false)
         return ViewHolder(view)
     }

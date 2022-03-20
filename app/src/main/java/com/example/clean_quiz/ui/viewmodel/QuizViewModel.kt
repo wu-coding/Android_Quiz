@@ -1,15 +1,19 @@
-package com.example.clean_quiz
+package com.example.clean_quiz.ui.viewmodel
 
 import android.widget.TextView
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.clean_quiz.Answer
+import com.example.clean_quiz.Question_Answers
 
 
 class QuizViewModel : ViewModel() {
 
-    private val quizData: MutableList<Question_Answers> = arrayListOf(Question_Answers("What is Android Jetpack?", listOf<Answer>(Answer("all of these", false), Answer("tools", true))),
+    private val quizData: MutableList<Question_Answers> = arrayListOf(
+        Question_Answers("What is Android Jetpack?", listOf<Answer>(Answer("all of these", false), Answer("tools", true))),
             Question_Answers("NAme", listOf<Answer>(Answer("Alex", false), Answer("Jessica", true))),
-            Question_Answers("Brpther", listOf<Answer>(Answer("Yes", false), Answer("No", true)))) as MutableList<Question_Answers>
+            Question_Answers("Brpther", listOf<Answer>(Answer("Yes", false), Answer("No", true)))
+    ) as MutableList<Question_Answers>
 
 
     val currentQuestion: MutableLiveData<Question_Answers> = MutableLiveData<Question_Answers>()

@@ -1,4 +1,4 @@
-package com.example.clean_quiz
+package com.example.clean_quiz.ui.views
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,11 +7,12 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.clean_quiz.R
 import com.example.clean_quiz.databinding.QuizFragmentBinding
-import com.example.quiz.QuizViewAdapter
+import com.example.clean_quiz.ui.viewmodel.QuizViewModel
+import com.example.clean_quiz.ui.adapter.QuizViewAdapter
 
 class QuizFragment : Fragment() {
 

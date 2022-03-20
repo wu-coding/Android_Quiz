@@ -1,4 +1,4 @@
-package com.example.clean_quiz
+package com.example.clean_quiz.ui.views
 
 import android.os.Bundle
 import android.view.LayoutInflater

@@ -1,4 +1,4 @@
-package com.example.clean_quiz.model
+package com.example.clean_quiz.data
 
 class User {
 }

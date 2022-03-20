@@ -1,14 +1,14 @@
-package com.example.clean_quiz
+package com.example.clean_quiz.ui.views
 
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import com.example.clean_quiz.R
 import com.example.clean_quiz.databinding.ActivityMainBinding
+import com.example.clean_quiz.ui.viewmodel.QuizViewModel
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
