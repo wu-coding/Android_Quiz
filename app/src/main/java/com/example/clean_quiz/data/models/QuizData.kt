@@ -1,6 +1,6 @@
 package com.example.clean_quiz
 
-class Question_Answers(val question:String, val answerList: List<Answer>)
+class QuizData(val question:String, val answerList: List<Answer>)
 {
     public fun getSize(): Int {
         return answerList.size
