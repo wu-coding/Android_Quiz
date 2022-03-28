@@ -1,12 +1,18 @@
-# Clean_Quiz
+Shifted Development to fetch branch 
+Need to update to latest version
 
-Quiz Logic Working
-Shifted Api to fetch branch
+##TODO
 
-Todo:
-UI
-About Alert Dialog
-Fragment Navigation
-Question Timer
+ - [x] User selects Trivia Data 
+ - [x] Get Data from API 
+ - [ ] De serialize Data
+ - [x] RecyclerView Implementation 
+ - [ ] Score calculating 
+ - [ ] Sharing Data
+
+
+##Additional Features
+ - Timer
+ - Room Implementation
 
 
