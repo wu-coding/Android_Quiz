@@ -1,14 +1,26 @@
 package com.example.clean_quiz.ui.viewmodel
 
+import android.app.Application
 import android.widget.TextView
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.clean_quiz.Answer
-import com.example.clean_quiz.Question_Answers
+import androidx.lifecycle.viewModelScope
+import com.example.clean_quiz.data.repository.QuizDataRepository
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 
+//import com.example.clean_quiz.Answer
 
-class QuizViewModel : ViewModel() {
+// maybe convert quizdata into live data?
 
+class QuizViewModel(application: Application,  hashParams:HashMap<String,String?>) :  AndroidViewModel( application) {
+
+    //Repository
+    fun getApiData(){
+        viewModelScope.launch{
+        QuizDataRepository.apiService.getQuizData(hashParams)
+    }
     private val quizData: MutableList<Question_Answers> = arrayListOf(
         Question_Answers("What is Android Jetpack?", listOf<Answer>(Answer("all of these", false), Answer("tools", true))),
             Question_Answers("NAme", listOf<Answer>(Answer("Alex", false), Answer("Jessica", true))),
@@ -21,7 +33,9 @@ class QuizViewModel : ViewModel() {
     private var rightScore:MutableLiveData<Int> = MutableLiveData<Int>(0)
     private var wrongScore:MutableLiveData<Int> = MutableLiveData<Int>(0)
 
-
+    fun getQuizData():{
+        return async{ QuizDataRepository.apiService.getQuizData(sendParams as Map<String, String>)}}
+    }
     fun loadQuestion(question: TextView) {
         question.text = currentQuestion.value?.question
     }
@@ -52,5 +66,6 @@ class QuizViewModel : ViewModel() {
     fun navigationCallback(){
 
     }
+
 
 }

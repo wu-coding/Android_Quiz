@@ -1,15 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     tools:context=".ui.views.StartFragment">
+    <data>
+        <variable name = "viewModel" type="com.example.clean_quiz.ui.viewmodel.StartViewModel"/>
+        <variable name = "spinnerAdapter" type="android.widget.SpinnerAdapter" />
+        <import type="android.view.View"/>
 
+
+    </data>
+<FrameLayout  android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <!-- TODO: Update blank fragment layout -->
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <EditText
             android:id="@+id/userName"
@@ -19,19 +25,66 @@
             android:gravity="center_horizontal"
             android:hint="enter your name"
             android:inputType="textPersonName"
-            tools:layout_editor_absoluteX="116dp"
-            tools:layout_editor_absoluteY="310dp" />
+            android:onTextChanged="@{(text, start, before, count) -> viewModel.userNameCallback(text)}" />
+
+        <Spinner
+            android:id="@+id/category_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onItemSelectedListener="@{viewModel.spinnerListener}"
+            />
+        <RadioGroup
+            android:id="@+id/difficulty_radiogroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onCheckedChanged="@{(group,checkedID) -> viewModel.radioCallback(group,checkedID)}"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/easy_radio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="easy" />
+
+            <RadioButton
+                android:id="@+id/medium_radio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="medium" />
+
+            <RadioButton
+                android:id="@+id/hard_radio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="hard" />
+
+        </RadioGroup>
+
+        <EditText
+            android:id="@+id/limit_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="Choose between 1 and 20"
+            android:inputType="numberSigned"
+            android:tag="numberSigned"
+            android:onTextChanged="@{(text, start, before, count) -> viewModel.questAmountCallback(text)}"
+            />
 
         <Button
             android:id="@+id/startButton"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Start"
-            app:layout_constraintTop_toBottomOf="@+id/userName"
-            tools:layout_editor_absoluteX="179dp" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+             />
+
+    </LinearLayout>
 
 
 </FrameLayout>
+</layout>

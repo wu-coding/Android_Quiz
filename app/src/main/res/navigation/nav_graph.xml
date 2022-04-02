@@ -6,6 +6,19 @@
     app:startDestination="@id/startFragment">
 
     <fragment
+        android:id="@+id/startFragment"
+        android:name="com.example.clean_quiz.ui.views.StartFragment"
+        android:label="fragment_start"
+        tools:layout="@layout/fragment_start" >
+        <action
+            android:id="@+id/next_quiz"
+            app:destination="@id/quizFragment"
+            app:popUpTo="@id/quizFragment">
+        <argument android:name="passUserParam"
+            app:argType= "java.util.HashMap"/>
+        </action>
+       </fragment>
+    <fragment
         android:id="@+id/quizFragment"
         android:name="com.example.clean_quiz.ui.views.QuizFragment"
         android:label="quiz_fragment"
@@ -17,17 +30,9 @@
     </fragment>
     <fragment
         android:id="@+id/scoreFragment"
-        android:name="com.example.clean_quiz.ScoreFragment"
+        android:name="com.example.clean_quiz.ui.views.ScoreFragment"
         android:label="fragment_score"
         tools:layout="@layout/fragment_score" />
-    <fragment
-        android:id="@+id/startFragment"
-        android:name="com.example.clean_quiz.ui.views.StartFragment"
-        android:label="fragment_start"
-        tools:layout="@layout/fragment_start" >
-        <action
-            android:id="@+id/action_startFragment_to_quizFragment"
-            app:destination="@id/quizFragment"
-            app:popUpTo="@id/quizFragment" />
-    </fragment>
+
+
 </navigation>

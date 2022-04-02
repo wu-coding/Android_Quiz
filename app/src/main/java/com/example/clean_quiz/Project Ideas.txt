@@ -3,6 +3,8 @@
 -Database to store results?
 -Quiz API?
 
+Hide recycler view until data load
+We can add a back to choice selection later but for now just destroying fragment is good
 retrofit
 and moshi
 
