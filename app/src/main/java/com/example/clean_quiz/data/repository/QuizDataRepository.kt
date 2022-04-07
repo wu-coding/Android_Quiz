@@ -1,7 +1,7 @@
 package com.example.clean_quiz.data.repository
 
-import com.example.clean_quiz.QuizData
-//import com.example.clean_quiz.QuizDataItem
+
+import com.example.clean_quiz.data.QuizDataJsonAdapter
 import com.example.clean_quiz.data.api.RetrofitService
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonElement
@@ -25,6 +25,7 @@ object QuizDataRepository {
    // val cards: List<Card> = adapter.fromJson(cardsJsonResponse)
 
     val moshi = Moshi.Builder()
+        .add(QuizDataJsonAdapter())
         .add(KotlinJsonAdapterFactory())
         .build()
 

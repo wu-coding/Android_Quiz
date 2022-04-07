@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.clean_quiz.R
 import com.example.clean_quiz.databinding.FragmentStartBinding
@@ -19,10 +18,10 @@ import com.example.clean_quiz.ui.viewmodel.StartViewModel
 
 class StartFragment : Fragment() {
     // TODO: Rename and change types of parameters
-    private val startViewModel: StartViewModel by activityViewModels()
+   // val startViewModel: StartViewModel by activityViewModels()
 
-
-    private lateinit var binding: FragmentStartBinding
+    val startViewModel =  StartViewModel()
+    lateinit var binding: FragmentStartBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,10 +48,17 @@ class StartFragment : Fragment() {
 
         // should use setError() https://stackoverflow.com/questions/64141542/data-binding-and-input-field-validation-and-manipulation-activity-fragment-nav
         binding.startButton.setOnClickListener() {
-            if (startViewModel.validateResponse()){
-                val sendUserParams = startViewModel.convertUserChoice()
-                findNavController().navigate(StartFragmentDirections.nextQuiz(sendUserParams))
-            }
+       /*     if (startViewModel.validateResponse()){
+            //    val sendUserParams = startViewModel.convertUserChoice()
+
+            }*/
+
+            val sendUserParams = hashMapOf( "category" to "Linux",
+                "difficulty" to "easy",
+                "limit" to 10,
+                "apiKey" to "hcUZqLCh8uTaXt121DQd5IQ7wv5GFIVA5YlaPxy4")
+
+            findNavController().navigate(StartFragmentDirections.nextQuiz(sendUserParams))
         }
 
     }

@@ -8,12 +8,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 
 import com.example.clean_quiz.R
+import com.example.clean_quiz.data.models.QuizData
 
 
-class QuizViewAdapter(private val quizData: MutableLiveData<Question_Answers>, private val OnClickCallback: (position: Int) -> Unit) : RecyclerView.Adapter<QuizViewAdapter.ViewHolder>() {
+class QuizViewAdapter(private val answerList:MutableLiveData<List<QuizData.Answer>>, private val OnClickCallback: (position: Int) -> Unit) : RecyclerView.Adapter<QuizViewAdapter.ViewHolder>() {
 
     // or we could simple declare quizData here and have another public function insert Data
-    // could save on async
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.quiz_fragment_item, parent, false)
@@ -22,7 +22,7 @@ class QuizViewAdapter(private val quizData: MutableLiveData<Question_Answers>, p
 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val answerBox = quizData.value?.answerList?.get(position)
+        val answerBox = answerList.value?.get(position)
         holder.answer.text = answerBox?.answer
         holder.bind(position)
     }
@@ -38,8 +38,10 @@ class QuizViewAdapter(private val quizData: MutableLiveData<Question_Answers>, p
     }
 
     override fun getItemCount(): Int {
-        val testing = quizData.value?.getSize()!!
+        // catch exception here?
+        return answerList.value!!.size
 
+        /*val testing = quizData.value?.getSize()!!
         try {
             if(quizData.value?.getSize() !== null){
                 return quizData.value?.getSize()!!
@@ -47,7 +49,7 @@ class QuizViewAdapter(private val quizData: MutableLiveData<Question_Answers>, p
                 throw Exception("null in count")
             }}catch(exception: Exception ){
             return 4
-        }
+        }*/
     }
 }
 

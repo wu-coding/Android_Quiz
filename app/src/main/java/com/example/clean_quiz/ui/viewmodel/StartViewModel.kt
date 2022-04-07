@@ -28,7 +28,9 @@ class StartViewModel: ViewModel() {
 
     val spinnerListener = object : AdapterView.OnItemSelectedListener {
         override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-            userData.category = view.toString()
+           // fix this
+            val temp = view as TextView
+            userData.category = temp.text as String?
         }
         override fun onNothingSelected(p0: AdapterView<*>?) {}
     }
@@ -68,7 +70,8 @@ class StartViewModel: ViewModel() {
     */
         return hashMapOf( "category" to userData.category,
             "difficulty" to userData.difficutly,
-            "limit" to userData.questionAmount.toString())
+            "limit" to userData.questionAmount.toString(),
+            "apiKey" to "hcUZqLCh8uTaXt121DQd5IQ7wv5GFIVA5YlaPxy4")
     }
 
 }

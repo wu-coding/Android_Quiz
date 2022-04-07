@@ -4,38 +4,41 @@ import android.app.Application
 import android.widget.TextView
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.clean_quiz.data.models.QuizData
 import com.example.clean_quiz.data.repository.QuizDataRepository
+import com.example.clean_quiz.ui.views.QuizFragment
 import kotlinx.coroutines.async
+
 import kotlinx.coroutines.launch
 
 //import com.example.clean_quiz.Answer
 
 // maybe convert quizdata into live data?
 
-class QuizViewModel(application: Application,  hashParams:HashMap<String,String?>) :  AndroidViewModel( application) {
+class QuizViewModel(application: Application, val hashParams:HashMap<String,String?>) :  AndroidViewModel( application) {
+
+    private lateinit var quizDataList:MutableList<QuizData>
+    var currentAnswerSet = MutableLiveData<List<QuizData.Answer>>()
+    var currentQuestion = MutableLiveData<String>()
+    var count = MutableLiveData(0)
 
     //Repository
-    fun getApiData(){
-        viewModelScope.launch{
-        QuizDataRepository.apiService.getQuizData(hashParams)
+    suspend fun getApiData(){
+
+     quizDataList = QuizDataRepository.apiService.getQuizData(hashParams).toMutableList()
+        }
+
+    fun loadData(){
+    //    currentAnswerSet.(quizDataList.first().answerArray)
+        currentAnswerSet.value = quizDataList.first().answerArray
+        currentQuestion.value = quizDataList.first().question
+        quizDataList.removeFirst()
     }
-    private val quizData: MutableList<Question_Answers> = arrayListOf(
-        Question_Answers("What is Android Jetpack?", listOf<Answer>(Answer("all of these", false), Answer("tools", true))),
-            Question_Answers("NAme", listOf<Answer>(Answer("Alex", false), Answer("Jessica", true))),
-            Question_Answers("Brpther", listOf<Answer>(Answer("Yes", false), Answer("No", true)))
-    ) as MutableList<Question_Answers>
+    fun checkAnswer(position: Int) {
 
-
-    val currentQuestion: MutableLiveData<Question_Answers> = MutableLiveData<Question_Answers>()
-
-    private var rightScore:MutableLiveData<Int> = MutableLiveData<Int>(0)
-    private var wrongScore:MutableLiveData<Int> = MutableLiveData<Int>(0)
-
-    fun getQuizData():{
-        return async{ QuizDataRepository.apiService.getQuizData(sendParams as Map<String, String>)}}
     }
+/*
     fun loadQuestion(question: TextView) {
         question.text = currentQuestion.value?.question
     }
@@ -65,7 +68,7 @@ class QuizViewModel(application: Application,  hashParams:HashMap<String,String?
 
     fun navigationCallback(){
 
-    }
+    }*/
 
 
 }

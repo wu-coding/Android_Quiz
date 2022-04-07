@@ -11,11 +11,8 @@ class User(
     val rightQuestion: Int? = null,
 )
 
-class Score{
-    val correctAnswers:Int? = null,
-    val incorrectAnswers:Int?=null
-
-}
+class Score(    val correctAnswers:Int? = null,
+                val incorrectAnswers:Int?=null)
 
 
 

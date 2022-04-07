@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.clean_quiz.ui.views.QuizFragment
 import java.util.HashMap
 
-class QuizViewModelFactory(val application: QuizFragment, val hash:HashMap<String,String?>) : ViewModelProvider.AndroidViewModelFactory(application
+class QuizViewModelFactory(val application: Application, val hash:HashMap<String,String?>) : ViewModelProvider.AndroidViewModelFactory(application
 ) {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {

@@ -1,25 +1,15 @@
-package com.example.clean_quiz
+package com.example.clean_quiz.data.models;
 
-import com.squareup.moshi.Json
-
-
-data class QuizData(
-
-    val answers: Map<String,String?>,
-    val category: String,
-    val correct_answer: String?,
-    val correct_answers:Map<String,String?>,
-  //  val answers_array:List<Answers>,
-    val description: Any? ,
-    val difficulty: String,
-    val explanation: Any?,
-    val id: Int,
-    val multiple_correct_answers: String,
-    val question: String,
-    val tags: List<Tag>?,
-    val tip: Any?
+class QuizData(
+        val question: String,
+        val multipleAnswers: String?,
+        var answerArray:List<Answer>,
+        val explanation:String?
+        val singleCorrectAnswers,
+        val multipleCorrectAnswers
 )
+{
+    class Answer(var answer:String? = null, var check:Boolean? = null){}
+}
 
-data class Tag(
-    val name: String?
-)
+

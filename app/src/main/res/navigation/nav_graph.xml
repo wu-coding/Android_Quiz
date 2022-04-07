@@ -14,8 +14,6 @@
             android:id="@+id/next_quiz"
             app:destination="@id/quizFragment"
             app:popUpTo="@id/quizFragment">
-        <argument android:name="passUserParam"
-            app:argType= "java.util.HashMap"/>
         </action>
        </fragment>
     <fragment
@@ -27,6 +25,10 @@
             android:id="@+id/action_quizFragment_to_scoreFragment"
             app:destination="@id/scoreFragment"
             app:popUpTo="@id/scoreFragment" />
+        <argument
+            android:name="passUserParam"
+            app:argType="java.util.HashMap"
+         />
     </fragment>
     <fragment
         android:id="@+id/scoreFragment"
