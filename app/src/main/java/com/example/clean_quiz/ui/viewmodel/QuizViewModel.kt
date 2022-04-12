@@ -1,16 +1,28 @@
 package com.example.clean_quiz.ui.viewmodel
 
 import android.app.Application
+import android.content.Context
+import android.util.Log
+import android.widget.Chronometer
+import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
+import androidx.core.content.res.ResourcesCompat.getDrawable
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import androidx.recyclerview.widget.RecyclerView
+import com.example.clean_quiz.R
+import com.example.clean_quiz.data.Score
 import com.example.clean_quiz.data.models.QuizData
 import com.example.clean_quiz.data.repository.QuizDataRepository
 import com.example.clean_quiz.ui.views.QuizFragment
 import kotlinx.coroutines.async
+import kotlinx.coroutines.currentCoroutineContext
 
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 //import com.example.clean_quiz.Answer
 
@@ -18,57 +30,63 @@ import kotlinx.coroutines.launch
 
 class QuizViewModel(application: Application, val hashParams:HashMap<String,String?>) :  AndroidViewModel( application) {
 
-    private lateinit var quizDataList:MutableList<QuizData>
-    var currentAnswerSet = MutableLiveData<List<QuizData.Answer>>()
+
+    lateinit var quizDataList: MutableList<QuizData>
+    val userScore = Score(application)
+    var currentAnswerSet = MutableLiveData<List<String>>()
     var currentQuestion = MutableLiveData<String>()
-    var count = MutableLiveData(0)
+
+    //   private lateinit var userChoices:Array<Boolean>
+    lateinit var currentCorrect: List<Boolean>
+    private lateinit var userChoices:MutableList<Boolean>
+
+    //lateinit var userChoices:ArrayList<Boolean>
+    var position = MutableLiveData<Int>()
+    var progress = MutableLiveData<Int>(0)
 
     //Repository
-    suspend fun getApiData(){
+    suspend fun getApiData() {
 
-     quizDataList = QuizDataRepository.apiService.getQuizData(hashParams).toMutableList()
-        }
+        quizDataList = QuizDataRepository.apiService.getQuizData(hashParams).toMutableList()
+    }
 
-    fun loadData(){
-    //    currentAnswerSet.(quizDataList.first().answerArray)
-        currentAnswerSet.value = quizDataList.first().answerArray
+    fun loadData() {
+
+        userScore.start()
         currentQuestion.value = quizDataList.first().question
+        currentAnswerSet.value = quizDataList.first().answerList
+        currentCorrect = quizDataList.first().correctAnswers
+        userChoices = ArrayList(quizDataList.first().userSelectedAnswers)
         quizDataList.removeFirst()
     }
-    fun checkAnswer(position: Int) {
 
-    }
-/*
-    fun loadQuestion(question: TextView) {
-        question.text = currentQuestion.value?.question
-    }
-
-    fun loadAnswers() {
-        currentQuestion.value = quizData.removeFirst()
-    }
-
-    fun shuffleAnswers() {
-        currentQuestion.value?.answerList?.shuffled()
-    }
-
-    fun checkAnswer(position: Int) {
-        if (currentQuestion.value!!.answerList.get(position).check) {
-            rightScore.value = (rightScore.value)?.plus(1)
-            if (quizData.size > 0) {
-                currentQuestion.setValue(quizData.removeFirst())
-            } else {
-         //       FragmentNav Easier to observe right score in main and change
-                TODO("Fragment Navigation")
-                // pass the resource id of fragment you want to navigate to callback main
+    fun checkAnswers() {
+        var testAnswers: Boolean = true
+        for (i in 0..(currentCorrect.size-1)) {
+            if (userChoices[i] == currentCorrect[i]) {
+                position.value = i
+            }else{
+                testAnswers = false
             }
-        } else {
-            wrongScore.value = (wrongScore.value)?.plus(1)
         }
+        userScore.updateScore(testAnswers)
+        userScore.stop()
     }
 
-    fun navigationCallback(){
+    val getUserCheck: (Int, Boolean) -> Boolean = { pos: Int, flip: Boolean ->
+        if (flip) userChoices[pos] = !userChoices[pos]
+        userChoices[pos]
+    }
 
-    }*/
+}
 
+class Score(context:Context){
+    val timeTaken = Chronometer(context)
 
+    var correct:Int = 0
+    var wrong:Int=0
+
+    fun updateScore(test:Boolean){ if (test) correct++ else wrong--}
+    fun start(){timeTaken.start()}
+    fun stop(){timeTaken.stop()}
 }

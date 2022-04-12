@@ -1,6 +1,8 @@
 package com.example.clean_quiz.data
 
-
+// user name
+// quiz info
+// score
 
 class User(
     var name:String? = null,
