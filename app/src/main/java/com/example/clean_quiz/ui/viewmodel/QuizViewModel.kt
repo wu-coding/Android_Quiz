@@ -44,6 +44,8 @@ class QuizViewModel(application: Application, val hashParams:HashMap<String,Stri
     var position = MutableLiveData<Int>()
     var progress = MutableLiveData<Int>(0)
 
+    val userInput = mutableSetOf<Int>()
+
     //Repository
     suspend fun getApiData() {
 
@@ -62,9 +64,32 @@ class QuizViewModel(application: Application, val hashParams:HashMap<String,Stri
 
     fun checkAnswers() {
         var testAnswers: Boolean = true
-        for (i in 0..(currentCorrect.size-1)) {
-            if (userChoices[i] == currentCorrect[i]) {
-                position.value = i
+
+        // for loop in all correct answers
+        // search for value if then
+        currentCorrect.mapIndexed { index, b ->
+            if(b && userArray.contains(index)){
+                userArray[index]
+            }else{
+                score --
+                //have correc answers?
+            }
+        }
+
+        // Need to remove user array duplicates?
+
+
+    // go though userArray
+        // check
+        for(i in currentCorrect){
+            if (currentCorrect.get())
+            if (userArray.contains() )
+        }
+        for (i in userArray) {
+
+            if ( currentCorrect[i]) {
+                // call this shit?
+                // edit image array?
             }else{
                 testAnswers = false
             }
@@ -73,8 +98,7 @@ class QuizViewModel(application: Application, val hashParams:HashMap<String,Stri
         userScore.stop()
     }
 
-    val getUserCheck: (Int, Boolean) -> Boolean = { pos: Int, flip: Boolean ->
-        if (flip) userChoices[pos] = !userChoices[pos]
+    val getUserCheck = { pos: Int,  ->
         userChoices[pos]
     }
 

@@ -20,7 +20,17 @@ import kotlin.coroutines.coroutineContext
 
 // should be immutable?
 class QuizViewAdapter(private val answerList:MutableLiveData<List<String>>,
-                      private val getUserChoice: (pos:Int, flip:Boolean) -> Boolean ,
+                      private val buttonColor:MutableLiveData<ArrayList<Boolean>>,
+
+                      private val getUserChoice: (pos:Int) -> Int,
+    // set of user input in viewmodel?
+    // function to check user input?
+    //
+                      // array of user choices determines color?, Then get position of change and rebuild?
+                      // check set and edit image array based on results?
+    // will be done in main fragment?
+    // //3 values set images?
+
                       private val positionCheck: MutableLiveData<Int>) : RecyclerView.Adapter<QuizViewAdapter.ViewHolder>(){
 // we dont need to pass position check we can just call it within viewmodel?
     // or we could simple declare quizData here and have another public function insert Data
@@ -36,6 +46,8 @@ class QuizViewAdapter(private val answerList:MutableLiveData<List<String>>,
        // holder.answer.text = answerList.value?.get(position)
         // could have lambda ?
         holder.cardText.text = answerList.value?.get(position)
+// if user in set light up, if not dont
+
 
         answerList.observeForever {
             holder.cardAnswer.setBackgroundColor(ContextCompat.getColor(holder.itemView.context,R.color.white))
@@ -58,7 +70,6 @@ class QuizViewAdapter(private val answerList:MutableLiveData<List<String>>,
                 }
                     holder.cardCheck.visibility = View.VISIBLE
             }
-
         }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
