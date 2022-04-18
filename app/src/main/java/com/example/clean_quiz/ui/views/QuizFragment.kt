@@ -56,24 +56,30 @@ class QuizFragment : Fragment() {
 
                      binding.quizRecyclerView.apply {
                     layoutManager = LinearLayoutManager(activity?.applicationContext, LinearLayoutManager.VERTICAL, false)
-                    adapter = QuizViewAdapter (quizViewModel.currentAnswerSet,quizViewModel.getUserCheck ,quizViewModel.position)
+                    adapter = QuizViewAdapter (quizViewModel.currentAnswerSet,quizViewModel.backgroundColors ,quizViewModel.imageType, quizViewModel.getUserInput)
                 }
-                binding.quizProgress.max = quizViewModel.currentAnswerSet.value!!.size
+                binding.quizProgress.max = quizViewModel.quizDataList.size
+
+                quizViewModel.backgroundColors.observe(viewLifecycleOwner){
+                    val temp = quizViewModel.updatePos
+                    binding.quizRecyclerView.adapter?.notifyItemChanged(quizViewModel.updatePos)
+                }
             }
 
             binding.questionText.text = quizViewModel.currentQuestion.value
 
-            quizViewModel.currentQuestion.observe(viewLifecycleOwner) {
-                binding.quizProgress.incrementProgressBy(1)
-            }
 
         binding.answerSubmit.setOnCheckedChangeListener { view, isChecked ->
                 if (isChecked) {
                     quizViewModel.checkAnswers()
-                    view.text = "Next"
-                } else {
-                   quizViewModel.loadData()
                     binding.quizRecyclerView.adapter?.notifyDataSetChanged()
+
+                } else {
+                    quizViewModel.loadData()
+         //           binding.quizRecyclerView.adapter.
+                    binding.quizRecyclerView.adapter?.notifyDataSetChanged()
+                    binding.quizProgress.incrementProgressBy(1)
+
                 }
             // another if
             }

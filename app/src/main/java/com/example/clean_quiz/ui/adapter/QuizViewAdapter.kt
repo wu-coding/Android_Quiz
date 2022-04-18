@@ -1,5 +1,6 @@
 package com.example.clean_quiz.ui.adapter
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,22 +20,15 @@ import kotlinx.coroutines.NonDisposableHandle.parent
 import kotlin.coroutines.coroutineContext
 
 // should be immutable?
-class QuizViewAdapter(private val answerList:MutableLiveData<List<String>>,
-                      private val buttonColor:MutableLiveData<ArrayList<Boolean>>,
+class QuizViewAdapter( var answerList:List<String>,
+                       var backgroundColor:MutableLiveData<Array<Int>>,
+                       var imageType:MutableLiveData<Array<Int>>,
+                      private val getUserChoice: (pos:Int) -> Unit
+) : RecyclerView.Adapter<QuizViewAdapter.ViewHolder>(){
 
-                      private val getUserChoice: (pos:Int) -> Int,
-    // set of user input in viewmodel?
-    // function to check user input?
-    //
-                      // array of user choices determines color?, Then get position of change and rebuild?
-                      // check set and edit image array based on results?
-    // will be done in main fragment?
-    // //3 values set images?
-
-                      private val positionCheck: MutableLiveData<Int>) : RecyclerView.Adapter<QuizViewAdapter.ViewHolder>(){
-// we dont need to pass position check we can just call it within viewmodel?
-    // or we could simple declare quizData here and have another public function insert Data
-        // just send 2 lambda
+    fun updateData(answerParam: List<String>, backgroundColor: MutableLiveData<Array<Int>>){
+        answerList = answerParam
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.quiz_fragment_item, parent, false)
@@ -43,44 +37,41 @@ class QuizViewAdapter(private val answerList:MutableLiveData<List<String>>,
 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-       // holder.answer.text = answerList.value?.get(position)
-        // could have lambda ?
-        holder.cardText.text = answerList.value?.get(position)
-// if user in set light up, if not dont
+        holder.cardText.text = answerList[position]
+        holder.setCardBG(position)
+        holder.setCardImage(position)
 
-
-        answerList.observeForever {
-            holder.cardAnswer.setBackgroundColor(ContextCompat.getColor(holder.itemView.context,R.color.white))
-            holder.cardCheck.visibility = View.INVISIBLE
+        holder.cardAnswer.setOnClickListener {
+            getUserChoice(position)
         }
 
-        holder.cardAnswer.setOnClickListener{
-            if (getUserChoice(position,true)){
-             holder.cardAnswer.setBackgroundColor(ContextCompat.getColor(holder.itemView.context,R.color.light_blue_600))
-         }else{
-             holder.cardAnswer.setBackgroundColor(ContextCompat.getColor(holder.itemView.context,R.color.white))
-         }}
 
-// Doesnt take into account all false answers
-        positionCheck.observeForever {
-            if (positionCheck.value == position) {
-                    holder.cardCheck.setImageResource(R.drawable.correct_answer)
-                }else{
-                    holder.cardCheck.setImageResource(R.drawable.wrong_answer)
-                }
-                    holder.cardCheck.visibility = View.VISIBLE
-            }
-        }
+    }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val cardAnswer: CardView = itemView.findViewById(R.id.item_card)
         val cardText: TextView = itemView.findViewById(R.id.item_answer)
         val cardCheck: ImageView = itemView.findViewById(R.id.item_check)
+
+        fun setCardImage(pos: Int){
+            if (imageType.value?.get(pos) !=  View.INVISIBLE){
+                cardCheck.visibility = View.VISIBLE
+                cardCheck.setImageResource(imageType.value?.get(pos)!!)
+            }
+        }
+
+        fun setCardBG(pos: Int){
+
+            // color are consistent
+            val test = backgroundColor.value?.get(pos)!!
+            cardAnswer.setBackgroundResource(backgroundColor.value?.get(pos)!!)
+       //     cardAnswer.setCardBackgroundColor(backgroundColor.value?.get(pos)!!)
+        }
     }
 
     override fun getItemCount(): Int {
         // catch exception here?
-        return answerList.value!!.size
+        return answerList.size
 
         /*val testing = quizData.value?.getSize()!!
         try {

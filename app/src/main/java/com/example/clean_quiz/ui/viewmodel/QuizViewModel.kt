@@ -2,7 +2,9 @@ package com.example.clean_quiz.ui.viewmodel
 
 import android.app.Application
 import android.content.Context
+import android.graphics.Color
 import android.util.Log
+import android.view.View
 import android.widget.Chronometer
 import android.widget.ImageView
 import android.widget.TextView
@@ -31,20 +33,22 @@ import kotlinx.coroutines.withContext
 class QuizViewModel(application: Application, val hashParams:HashMap<String,String?>) :  AndroidViewModel( application) {
 
 
-    lateinit var quizDataList: MutableList<QuizData>
+
     val userScore = Score(application)
-    var currentAnswerSet = MutableLiveData<List<String>>()
-    var currentQuestion = MutableLiveData<String>()
-
-    //   private lateinit var userChoices:Array<Boolean>
-    lateinit var currentCorrect: List<Boolean>
-    private lateinit var userChoices:MutableList<Boolean>
-
-    //lateinit var userChoices:ArrayList<Boolean>
-    var position = MutableLiveData<Int>()
     var progress = MutableLiveData<Int>(0)
+    lateinit var quizDataList: MutableList<QuizData>
 
+    var currentQuestion = MutableLiveData<String>() //test livedata
+
+    lateinit var currentCorrect: List<Boolean>
+    lateinit var currentAnswerSet:List<String>
+
+   // lateinit var backgroundColors:MutableLiveData<ArrayList<Int>>
+    lateinit var backgroundColors:MutableLiveData<Array<Int>>
+    lateinit var imageType:MutableLiveData<Array<Int>>
     val userInput = mutableSetOf<Int>()
+
+    var updatePos = 0
 
     //Repository
     suspend fun getApiData() {
@@ -53,56 +57,66 @@ class QuizViewModel(application: Application, val hashParams:HashMap<String,Stri
     }
 
     fun loadData() {
-
-        userScore.start()
+     //   userScore.start()
+        userInput.clear()
         currentQuestion.value = quizDataList.first().question
-        currentAnswerSet.value = quizDataList.first().answerList
         currentCorrect = quizDataList.first().correctAnswers
-        userChoices = ArrayList(quizDataList.first().userSelectedAnswers)
+        currentAnswerSet = quizDataList.first().answerList
+
+        // cant be int
+        backgroundColors = MutableLiveData<Array<Int>>(Array(currentCorrect.size){R.color.white})
+        val temp = R.color.white
+        val tempdo = backgroundColors.value?.get(0)
+        imageType =  MutableLiveData<Array<Int>>(Array(currentCorrect.size){ View.INVISIBLE})
+
         quizDataList.removeFirst()
     }
 
-    fun checkAnswers() {
+
+    fun checkAnswers():Boolean {
+// we can use a stack to keep track of updated values?
         var testAnswers: Boolean = true
+        for ((i, value) in currentCorrect.withIndex()) {
+            if (value) {
+                if (userInput.contains(i)) {
+                    imageType.value?.set(i, R.drawable.correct_answer)
+                    userInput.remove(i)
+                } else {
+                    imageType.value?.set(i, R.drawable.correct_answer)
 
-        // for loop in all correct answers
-        // search for value if then
-        currentCorrect.mapIndexed { index, b ->
-            if(b && userArray.contains(index)){
-                userArray[index]
-            }else{
-                score --
-                //have correc answers?
+                    backgroundColors.value?.set(i, R.color.yellow)
+                    testAnswers = false
+                }
+            }
+
+            if(userInput.size > 0){
+                for(i in userInput){
+                    userInput.remove(i)
+                       imageType.value?.set(i, R.drawable.wrong_answer)
+                       backgroundColors.value?.set(i, R.color.red)
+                }
             }
         }
+        return testAnswers
+    }
 
-        // Need to remove user array duplicates?
-
-
-    // go though userArray
-        // check
-        for(i in currentCorrect){
-            if (currentCorrect.get())
-            if (userArray.contains() )
-        }
-        for (i in userArray) {
-
-            if ( currentCorrect[i]) {
-                // call this shit?
-                // edit image array?
+        // check view visible or not?
+        val getUserInput = { pos:Int ->
+            if (userInput.contains(pos)){
+                backgroundColors.value?.set(pos, R.color.white)
+                userInput.remove(pos)
             }else{
-                testAnswers = false
+                userInput.add(pos)
+                backgroundColors.value?.set(pos,  R.color.light_blue_600)
             }
+            updatePos = pos
+            val temp = backgroundColors.value?.clone()
+            backgroundColors.value = temp!!
+
         }
-        userScore.updateScore(testAnswers)
-        userScore.stop()
     }
 
-    val getUserCheck = { pos: Int,  ->
-        userChoices[pos]
-    }
 
-}
 
 class Score(context:Context){
     val timeTaken = Chronometer(context)
