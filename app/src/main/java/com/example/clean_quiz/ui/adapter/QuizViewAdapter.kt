@@ -17,18 +17,21 @@ import com.example.clean_quiz.R
 import com.example.clean_quiz.data.models.QuizData
 import com.google.android.material.internal.ContextUtils.getActivity
 import kotlinx.coroutines.NonDisposableHandle.parent
+import java.util.ArrayList
 import kotlin.coroutines.coroutineContext
 
 // should be immutable?
-class QuizViewAdapter( var answerList:List<String>,
-                       var backgroundColor:MutableLiveData<Array<Int>>,
-                       var imageType:MutableLiveData<Array<Int>>,
+class QuizViewAdapter( val answerList:ArrayList<String>,
+                       val backgroundColor:MutableLiveData<Array<Int>>,
+                       val imageType:ArrayList<Int?>,
                       private val getUserChoice: (pos:Int) -> Unit
 ) : RecyclerView.Adapter<QuizViewAdapter.ViewHolder>(){
 
-    fun updateData(answerParam: List<String>, backgroundColor: MutableLiveData<Array<Int>>){
+/*    fun updateData(answerParam: List<String>, backgroundParam: MutableLiveData<Array<Int>>){
         answerList = answerParam
-    }
+        backgroundColor = backgroundParam,
+//
+    }*/
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.quiz_fragment_item, parent, false)
@@ -54,9 +57,13 @@ class QuizViewAdapter( var answerList:List<String>,
         val cardCheck: ImageView = itemView.findViewById(R.id.item_check)
 
         fun setCardImage(pos: Int){
-            if (imageType.value?.get(pos) !=  View.INVISIBLE){
+            if(imageType[pos] == null){
+                cardCheck.setImageResource(0)
+                cardCheck.visibility = View.INVISIBLE
+            }
+            else{
+                cardCheck.setImageResource(imageType[pos]!!)
                 cardCheck.visibility = View.VISIBLE
-                cardCheck.setImageResource(imageType.value?.get(pos)!!)
             }
         }
 

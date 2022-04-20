@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
@@ -43,7 +44,10 @@ class QuizFragment : Fragment() {
     }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        binding = QuizFragmentBinding.inflate(inflater)
+        binding = DataBindingUtil.inflate(inflater, R.layout.quiz_fragment, container, false)
+        //    QuizFragmentBinding.inflate(inflater)
+        binding.viewModel = quizViewModel
+        binding.lifecycleOwner = this
         return binding.root
     }
 
@@ -59,29 +63,29 @@ class QuizFragment : Fragment() {
                     adapter = QuizViewAdapter (quizViewModel.currentAnswerSet,quizViewModel.backgroundColors ,quizViewModel.imageType, quizViewModel.getUserInput)
                 }
                 binding.quizProgress.max = quizViewModel.quizDataList.size
-
+                binding.timeTaken.start()
                 quizViewModel.backgroundColors.observe(viewLifecycleOwner){
-                    val temp = quizViewModel.updatePos
                     binding.quizRecyclerView.adapter?.notifyItemChanged(quizViewModel.updatePos)
                 }
             }
 
-            binding.questionText.text = quizViewModel.currentQuestion.value
+           // binding.questionText.text = quizViewModel.currentQuestion.value
 
 
         binding.answerSubmit.setOnCheckedChangeListener { view, isChecked ->
+            val temp = binding.questionText.text
+            val temp2 = quizViewModel.currentQuestion
                 if (isChecked) {
                     quizViewModel.checkAnswers()
                     binding.quizRecyclerView.adapter?.notifyDataSetChanged()
 
                 } else {
+                    quizViewModel.clearData()
                     quizViewModel.loadData()
-         //           binding.quizRecyclerView.adapter.
                     binding.quizRecyclerView.adapter?.notifyDataSetChanged()
                     binding.quizProgress.incrementProgressBy(1)
-
                 }
-            // another if
+
             }
         }
 

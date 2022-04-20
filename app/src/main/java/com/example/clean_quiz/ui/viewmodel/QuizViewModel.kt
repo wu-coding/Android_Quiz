@@ -3,6 +3,7 @@ package com.example.clean_quiz.ui.viewmodel
 import android.app.Application
 import android.content.Context
 import android.graphics.Color
+import android.text.method.TextKeyListener.clear
 import android.util.Log
 import android.view.View
 import android.widget.Chronometer
@@ -25,6 +26,9 @@ import kotlinx.coroutines.currentCoroutineContext
 
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 //import com.example.clean_quiz.Answer
 
@@ -32,42 +36,49 @@ import kotlinx.coroutines.withContext
 
 class QuizViewModel(application: Application, val hashParams:HashMap<String,String?>) :  AndroidViewModel( application) {
 
-
+    // backgroundColors = MutableLiveData<Array<Int>>(Array(currentCorrect.size){R.color.white})
 
     val userScore = Score(application)
-    var progress = MutableLiveData<Int>(0)
+    val progress = MutableLiveData<Int>(0)
     lateinit var quizDataList: MutableList<QuizData>
 
-    var currentQuestion = MutableLiveData<String>() //test livedata
+    val currentQuestion = MutableLiveData<String>() //test livedata
 
     lateinit var currentCorrect: List<Boolean>
-    lateinit var currentAnswerSet:List<String>
 
-   // lateinit var backgroundColors:MutableLiveData<ArrayList<Int>>
-    lateinit var backgroundColors:MutableLiveData<Array<Int>>
-    lateinit var imageType:MutableLiveData<Array<Int>>
+    val currentAnswerSet = ArrayList<String>(6)
+
+    val backgroundColors = MutableLiveData<Array<Int>>()
+
+    val imageType = ArrayList<Int?>(6)
+
     val userInput = mutableSetOf<Int>()
 
     var updatePos = 0
 
+
     //Repository
     suspend fun getApiData() {
-
         quizDataList = QuizDataRepository.apiService.getQuizData(hashParams).toMutableList()
     }
 
+fun clearData(){
+    currentAnswerSet.clear()
+   // backgroundColors.value?.set(null)
+    imageType.clear()
+    updatePos = 0
+    userInput.clear()
+
+}
     fun loadData() {
-     //   userScore.start()
-        userInput.clear()
+      //  userScore.start()
+        //also need to fix livedata reseting?
+
         currentQuestion.value = quizDataList.first().question
         currentCorrect = quizDataList.first().correctAnswers
-        currentAnswerSet = quizDataList.first().answerList
-
-        // cant be int
-        backgroundColors = MutableLiveData<Array<Int>>(Array(currentCorrect.size){R.color.white})
-        val temp = R.color.white
-        val tempdo = backgroundColors.value?.get(0)
-        imageType =  MutableLiveData<Array<Int>>(Array(currentCorrect.size){ View.INVISIBLE})
+        currentAnswerSet.addAll(quizDataList.first().answerList)
+        backgroundColors.value = Array(currentCorrect.size){R.color.white}
+        imageType.addAll(Collections.nCopies(currentCorrect.size, null))
 
         quizDataList.removeFirst()
     }
@@ -79,24 +90,24 @@ class QuizViewModel(application: Application, val hashParams:HashMap<String,Stri
         for ((i, value) in currentCorrect.withIndex()) {
             if (value) {
                 if (userInput.contains(i)) {
-                    imageType.value?.set(i, R.drawable.correct_answer)
+                    imageType[i] = R.drawable.correct_answer
                     userInput.remove(i)
                 } else {
-                    imageType.value?.set(i, R.drawable.correct_answer)
-
+                    imageType[i] =  R.drawable.correct_answer
                     backgroundColors.value?.set(i, R.color.yellow)
                     testAnswers = false
                 }
             }
+        }
 
-            if(userInput.size > 0){
-                for(i in userInput){
-                    userInput.remove(i)
-                       imageType.value?.set(i, R.drawable.wrong_answer)
-                       backgroundColors.value?.set(i, R.color.red)
-                }
+        if(userInput.size > 0){
+            for(i in userInput){
+       //         userInput.remove(i)
+                imageType[i] = R.drawable.wrong_answer
+                backgroundColors.value?.set(i, R.color.red)
             }
         }
+     //   userScore.updateScore(testAnswers)
         return testAnswers
     }
 
@@ -110,8 +121,7 @@ class QuizViewModel(application: Application, val hashParams:HashMap<String,Stri
                 backgroundColors.value?.set(pos,  R.color.light_blue_600)
             }
             updatePos = pos
-            val temp = backgroundColors.value?.clone()
-            backgroundColors.value = temp!!
+            backgroundColors.value = backgroundColors.value
 
         }
     }
