@@ -8,8 +8,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.clean_quiz.R
 import com.example.clean_quiz.databinding.ActivityMainBinding
 import com.example.clean_quiz.ui.viewmodel.StartViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     val startViewModel: StartViewModel by viewModels()
@@ -19,13 +20,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setSupportActionBar(binding.topToolbar)
 
     //    val navHostId = supportFragmentManager.findFragmentById(R.id.nav_graph)
 
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+   /* override fun onCreateOptionsMenu(menu: Menu?): Boolean {
 
         val inflater: MenuInflater = menuInflater
         inflater.inflate(R.menu.toolbar_menu, menu)
@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
             true
         }
         return super.onCreateOptionsMenu(menu)
-    }
+    }*/
 
 }
 

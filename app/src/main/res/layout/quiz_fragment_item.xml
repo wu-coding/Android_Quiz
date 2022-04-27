@@ -5,27 +5,37 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <androidx.cardview.widget.CardView
+
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/item_card"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:checkable="true"
         android:clickable="true"
-        android:foreground="?attr/selectableItemBackgroundBorderless"
-        android:minWidth="32dp"
-        android:minHeight="32dp">
+        android:focusable="true">
 
-        <TextView
-            android:id="@+id/item_answer"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent" />
-
-        <ImageView
-            android:id="@+id/item_check"
-            android:layout_width="wrap_content"
+        <TableRow
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:visibility="invisible"
-            app:srcCompat="@android:drawable/checkbox_off_background" />
-    </androidx.cardview.widget.CardView>
+            android:orientation="vertical"
+            android:stretchColumns="1">
+            <!--Need table layout to work. Maybe switch to horionztal?-->
+
+
+            <TextView
+                android:id="@+id/item_answer"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+
+            <ImageView
+                android:id="@+id/item_check"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:visibility="invisible"
+                app:srcCompat="@android:drawable/checkbox_off_background" />
+        </TableRow>
+
+    </com.google.android.material.card.MaterialCardView>
 
 </FrameLayout>

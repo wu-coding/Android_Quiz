@@ -53,7 +53,7 @@ class QuizFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+/*
             viewLifecycleOwner.lifecycleScope.launch {
                 withContext(Dispatchers.IO) { quizViewModel.getApiData() }
                 quizViewModel.loadData()
@@ -86,7 +86,7 @@ class QuizFragment : Fragment() {
                     binding.quizProgress.incrementProgressBy(1)
                 }
 
-            }
+            }*/
         }
 
     }

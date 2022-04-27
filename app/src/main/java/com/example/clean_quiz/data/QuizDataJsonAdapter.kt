@@ -4,11 +4,9 @@ import com.example.clean_quiz.QuizDataJson
 import com.example.clean_quiz.data.models.QuizData
 import com.squareup.moshi.FromJson
 
-//import com.example.clean_quiz.Answers
-//import com.squareup.moshi.FromJson
-
 class QuizDataJsonAdapter {
-// fix null
+
+    // Might not need this class?
     @FromJson
     fun answerFromJSON(quizDataJson: QuizDataJson):QuizData{
     val answerList = ArrayList<String>()

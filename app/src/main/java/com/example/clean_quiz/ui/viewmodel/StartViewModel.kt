@@ -1,39 +1,45 @@
 package com.example.clean_quiz.ui.viewmodel
 
 
-import android.os.Bundle
-import android.util.Log
-import android.view.View
 import android.widget.*
-import androidx.core.os.bundleOf
-import androidx.databinding.BindingAdapter
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.example.clean_quiz.data.User
-import com.example.clean_quiz.data.repository.QuizDataRepository
-import com.example.clean_quiz.ui.views.MainActivity
-import com.google.gson.JsonElement
-import com.squareup.moshi.Json
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
-import okhttp3.Dispatcher
-import org.json.JSONObject
 
 class StartViewModel: ViewModel() {
     var userData: User = User()
 
+    var name = ""
+    var category = "Select a Category"
+    var difficulty = -1
+    var questionAmount = ""
+    var errorOutput = ""
 
-    val spinnerListener = object : AdapterView.OnItemSelectedListener {
-        override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-           // fix this
-            val temp = view as TextView
-            userData.category = temp.text as String?
+// name length = 0
+    // just make it a toast?
+
+    fun validateResponse() {
+        errorOutput = ""
+        var errorMessage = ""
+
+        if (name == "") errorMessage += " name"
+        if (category == "Select a Category") errorMessage += " category"
+        if (difficulty == -1) errorMessage += " difficulty"
+        if (questionAmount == "") errorMessage += " question amount"
+
+        if (errorMessage.length > 0){
+            errorOutput = "Please fill out the empty section:" + errorMessage
         }
-        override fun onNothingSelected(p0: AdapterView<*>?) {}
     }
+
+    fun test(){
+        val temp = 0
+    }
+/*    fun validateUserName(){}
+    fun validateCategory(){}
+    fun validateDifficulty(){}
+    fun validateQuestionAmount(){}*/
+
 
     fun radioCallback(radioGroup: RadioGroup, radioButtonID: Int) {
         val radioButton = radioGroup.findViewById<RadioButton>(radioButtonID)
@@ -48,7 +54,7 @@ class StartViewModel: ViewModel() {
         userData.name = text.toString()
     }
 
-    fun validateResponse():Boolean {
+  /*  fun validateResponse():Boolean {
         // Fix implementation to notify individual fields of mistakes
         return !( listOf(
             userData.name,
@@ -58,7 +64,7 @@ class StartViewModel: ViewModel() {
         ).any { it == null}
                 && userData.difficutly != "Select a Category"
                 && userData.questionAmount in 1..20)
-    }
+    }*/
 
     fun convertUserChoice():HashMap<String,String?> {
 

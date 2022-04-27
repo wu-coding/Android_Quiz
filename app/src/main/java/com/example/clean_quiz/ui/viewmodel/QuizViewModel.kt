@@ -1,40 +1,24 @@
 package com.example.clean_quiz.ui.viewmodel
 
-import android.app.Application
 import android.content.Context
-import android.graphics.Color
-import android.text.method.TextKeyListener.clear
-import android.util.Log
-import android.view.View
 import android.widget.Chronometer
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.cardview.widget.CardView
-import androidx.core.content.res.ResourcesCompat.getDrawable
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
-import androidx.recyclerview.widget.RecyclerView
 import com.example.clean_quiz.R
 import com.example.clean_quiz.data.Score
 import com.example.clean_quiz.data.models.QuizData
-import com.example.clean_quiz.data.repository.QuizDataRepository
-import com.example.clean_quiz.ui.views.QuizFragment
-import kotlinx.coroutines.async
-import kotlinx.coroutines.currentCoroutineContext
+import com.example.clean_quiz.data.repository.ApiDataRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.util.*
+import javax.inject.Inject
 import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 
 //import com.example.clean_quiz.Answer
 
 // maybe convert quizdata into live data?
 
-class QuizViewModel(application: Application, val hashParams:HashMap<String,String?>) :  AndroidViewModel( application) {
+@HiltViewModel
+class QuizViewModel @Inject constructor( private val apiRepo: ApiDataRepository) {
 
     // backgroundColors = MutableLiveData<Array<Int>>(Array(currentCorrect.size){R.color.white})
 
@@ -59,7 +43,7 @@ class QuizViewModel(application: Application, val hashParams:HashMap<String,Stri
 
     //Repository
     suspend fun getApiData() {
-        quizDataList = QuizDataRepository.apiService.getQuizData(hashParams).toMutableList()
+        quizDataList = ApiDataRepository.apiService.getQuizData(hashParams).toMutableList()
     }
 
 fun clearData(){
@@ -85,7 +69,7 @@ fun clearData(){
 
 
     fun checkAnswers():Boolean {
-// we can use a stack to keep track of updated values?
+// we can use a livedata stack to keep track of updated values?
         var testAnswers: Boolean = true
         for ((i, value) in currentCorrect.withIndex()) {
             if (value) {

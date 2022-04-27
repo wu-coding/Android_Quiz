@@ -14,27 +14,22 @@
     android:layout_height="match_parent"
     >
 
+
     <Chronometer
         android:id="@+id/time_taken"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
+        android:layout_marginEnd="56dp"
+        android:layout_marginRight="56dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/answer_submit"
-        tools:layout_editor_absoluteY="554dp"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        app:trackCornerRadius="10dp"
+        android:progress="@{viewModel.progress}"/>
 
-
-    <ProgressBar
-        android:id="@+id/quiz_progress"
-        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:progress="@{viewModel.progress}"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="100dp" />
 
     <TextView
         android:id="@+id/questionText"
@@ -44,7 +39,7 @@
         android:text="@={viewModel.currentQuestion}"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/quiz_progress" />
+       />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/quiz_recyclerView"
@@ -58,15 +53,26 @@
 
     </androidx.recyclerview.widget.RecyclerView>
 
-    <ToggleButton
-        android:id="@+id/answer_submit"
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/submit_answers"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="23dp"
+        android:layout_marginEnd="56dp"
+        android:layout_marginRight="56dp"
         android:text="Submit"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/quiz_recyclerView" />
+        app:layout_constraintEnd_toStartOf="@+id/next_question"
+        tools:layout_editor_absoluteY="534dp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/next_question"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Next"
+        tools:layout_editor_absoluteX="238dp"
+        tools:layout_editor_absoluteY="534dp" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

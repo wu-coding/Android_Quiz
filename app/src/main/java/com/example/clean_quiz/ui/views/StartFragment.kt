@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
@@ -36,23 +37,23 @@ class StartFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        ArrayAdapter.createFromResource(
-            requireContext(),
-            R.array.category_array,
-            android.R.layout.simple_spinner_item
-        ).also { adapter ->
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            binding.categorySpinner.adapter = adapter
-        }
+        val items =  resources.getStringArray(R.array.category_array)
+        val arrayAdapter = ArrayAdapter(requireContext(), R.layout.list_item, items)
+        binding.autoCompleteTextView.setAdapter(arrayAdapter)
 
 
         // should use setError() https://stackoverflow.com/questions/64141542/data-binding-and-input-field-validation-and-manipulation-activity-fragment-nav
         binding.startButton.setOnClickListener() {
+        if (startViewModel.errorOutput.length > 0){
+            Toast.makeText(requireContext(), startViewModel.errorOutput, Toast.LENGTH_SHORT).show()
+        }else{
+         //   findNavController().navigate(StartFragmentDirections.nextQuiz(sendUserParams))
+        }
        /*     if (startViewModel.validateResponse()){
             //    val sendUserParams = startViewModel.convertUserChoice()
 
             }*/
-
+            startViewModel.test()
             val sendUserParams = hashMapOf( "category" to "Linux",
                 "difficulty" to "easy",
                 "limit" to 10,

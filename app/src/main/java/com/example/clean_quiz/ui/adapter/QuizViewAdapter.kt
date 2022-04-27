@@ -46,9 +46,10 @@ class QuizViewAdapter( val answerList:ArrayList<String>,
 
         holder.cardAnswer.setOnClickListener {
             getUserChoice(position)
+       // switch stuff?
+        // notifyitemchanged?
+
         }
-
-
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

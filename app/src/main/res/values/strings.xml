@@ -1,6 +1,5 @@
 <resources>
     <string-array name="category_array">
-        <item>Select a Category</item>
         <item>Linux</item>
         <item>DevOps</item>
         <item>Networking</item>
