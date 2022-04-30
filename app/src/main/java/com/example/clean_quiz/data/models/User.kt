@@ -1,9 +1,14 @@
 package com.example.clean_quiz.data
 
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
 // user name
 // quiz info
 // score
 
+/*
 class User(
     var name:String? = null,
     var category: String? = null,
@@ -15,6 +20,13 @@ class User(
 
 class Score(    val correctAnswers:Int? = null,
                 val incorrectAnswers:Int?=null)
+*/
 
 
-
+@Entity(tableName = "user")
+data class User(
+    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "user_id")
+    val userId: Int,
+    @ColumnInfo(name = "first_name") val firstName:String,
+    @ColumnInfo(name = "last_name") val lastName:String
+)

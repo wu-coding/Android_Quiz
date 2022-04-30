@@ -4,26 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.clean_quiz.R
 
 import com.example.clean_quiz.databinding.QuizFragmentBinding
-import com.example.clean_quiz.ui.adapter.QuizViewAdapter
 import com.example.clean_quiz.ui.viewmodel.QuizViewModel
-import com.example.clean_quiz.ui.viewmodel.QuizViewModelFactory
-import com.example.clean_quiz.ui.viewmodel.StartViewModel
-import kotlinx.coroutines.*
-import java.util.HashMap
-import kotlin.math.max
 
 class QuizFragment : Fragment() {
 // make button xml background change on click
@@ -32,14 +19,15 @@ class QuizFragment : Fragment() {
     private lateinit var binding:QuizFragmentBinding
     private lateinit var quizViewModel:QuizViewModel
 
+    val args:QuizFragmentArgs by navArgs()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        val args:QuizFragmentArgs by navArgs()
+        val temp:Long = args.passUserParam
+    /*    val args:QuizFragmentArgs by navArgs()
         quizViewModel = ViewModelProvider(this, QuizViewModelFactory(requireActivity().application,
             args.passUserParam as HashMap<String, String?>
-        ))[QuizViewModel::class.java]
+        ))[QuizViewModel::class.java]*/
 
     }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,

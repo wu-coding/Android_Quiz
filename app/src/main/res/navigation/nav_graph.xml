@@ -23,11 +23,10 @@
         tools:layout="@layout/quiz_fragment" >
         <action
             android:id="@+id/action_quizFragment_to_scoreFragment"
-            app:destination="@id/scoreFragment"
-            app:popUpTo="@id/scoreFragment" />
+            app:destination="@id/scoreFragment" />
         <argument
             android:name="passUserParam"
-            app:argType="java.util.HashMap"
+            app:argType="long"
          />
     </fragment>
     <fragment

@@ -1,24 +1,16 @@
 package com.example.clean_quiz.ui.adapter
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
-import androidx.core.content.ContextCompat
-import androidx.core.view.get
-import androidx.core.view.isVisible
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 
 import com.example.clean_quiz.R
-import com.example.clean_quiz.data.models.QuizData
-import com.google.android.material.internal.ContextUtils.getActivity
-import kotlinx.coroutines.NonDisposableHandle.parent
 import java.util.ArrayList
-import kotlin.coroutines.coroutineContext
 
 // should be immutable?
 class QuizViewAdapter( val answerList:ArrayList<String>,

@@ -1,16 +1,17 @@
-package com.example.clean_quiz.data.DAO
+package com.example.clean_quiz.data.models
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
+import com.example.clean_quiz.data.User
 
 @Entity(
     tableName = "record",
     foreignKeys = [ForeignKey(
         entity = User::class,
-        parentColumns = arrayOf("userId"),
-        childColumns = arrayOf("userID"),
+        parentColumns = arrayOf("user_id"),
+        childColumns = arrayOf("user_id"),
         onUpdate = ForeignKey.CASCADE,
         onDelete = ForeignKey.CASCADE
     )]

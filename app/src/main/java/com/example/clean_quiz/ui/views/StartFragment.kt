@@ -10,18 +10,22 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.clean_quiz.R
 import com.example.clean_quiz.databinding.FragmentStartBinding
 import com.example.clean_quiz.ui.viewmodel.StartViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.*
 
 
-
+@AndroidEntryPoint
 class StartFragment : Fragment() {
     // TODO: Rename and change types of parameters
    // val startViewModel: StartViewModel by activityViewModels()
 
-    val startViewModel =  StartViewModel()
+    private val startViewModel:StartViewModel by viewModels()
     lateinit var binding: FragmentStartBinding
 
     override fun onCreateView(
@@ -48,19 +52,22 @@ class StartFragment : Fragment() {
             Toast.makeText(requireContext(), startViewModel.errorOutput, Toast.LENGTH_SHORT).show()
         }else{
          //   findNavController().navigate(StartFragmentDirections.nextQuiz(sendUserParams))
+            viewLifecycleOwner.lifecycleScope.launch(){
+             //   lateinit var writeDb:Deferred<Object>
+                var input: Long = 0
+                val temp = async (Dispatchers.IO) {
+                        input = startViewModel.writeDatabase() as Long
+                    }
+                temp.await()
+                findNavController().navigate(StartFragmentDirections.nextQuiz(input))
+                }
+
+
+            }
         }
-       /*     if (startViewModel.validateResponse()){
-            //    val sendUserParams = startViewModel.convertUserChoice()
 
-            }*/
-            startViewModel.test()
-            val sendUserParams = hashMapOf( "category" to "Linux",
-                "difficulty" to "easy",
-                "limit" to 10,
-                "apiKey" to "hcUZqLCh8uTaXt121DQd5IQ7wv5GFIVA5YlaPxy4")
 
-            findNavController().navigate(StartFragmentDirections.nextQuiz(sendUserParams))
         }
 
-    }
 }
+

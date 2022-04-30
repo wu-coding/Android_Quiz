@@ -1,32 +1,32 @@
 package com.example.clean_quiz.data
 
-import com.example.clean_quiz.QuizDataJson
-import com.example.clean_quiz.data.models.QuizData
+import com.example.clean_quiz.ApiDataJson
+import com.example.clean_quiz.data.models.Card
 import com.squareup.moshi.FromJson
 
-class QuizDataJsonAdapter {
+class ApiDataJsonAdapter {
 
     // Might not need this class?
     @FromJson
-    fun answerFromJSON(quizDataJson: QuizDataJson):QuizData{
+    fun answerFromJSON(apiDataJson: ApiDataJson):Card{
     val answerList = ArrayList<String>()
     val correctAnswers = ArrayList<Boolean>()
-    quizDataJson.answers.values.map {
+        apiDataJson.answers.values.map {
         if(it != null)  {
             answerList.add(it)
         }}
 
-    quizDataJson.correct_answers.values.mapIndexed {
+        apiDataJson.correct_answers.values.mapIndexed {
             index, it -> if (index < answerList.size) {correctAnswers.add(it.toBoolean())} }
 
     val userChoices = MutableList<Boolean>(answerList.size, {false})
 
-    return QuizData(
-        quizDataJson.question,
+    return Card(
+        "temp",
         answerList,
         correctAnswers,
         userChoices,
-        quizDataJson.explanation.toString()
+        apiDataJson.explanation.toString()
     )
     }
 }

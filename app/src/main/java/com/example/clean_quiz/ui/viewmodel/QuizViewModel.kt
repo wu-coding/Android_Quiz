@@ -3,9 +3,10 @@ package com.example.clean_quiz.ui.viewmodel
 import android.content.Context
 import android.widget.Chronometer
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.example.clean_quiz.R
-import com.example.clean_quiz.data.Score
-import com.example.clean_quiz.data.models.QuizData
+
+import com.example.clean_quiz.data.models.Card
 import com.example.clean_quiz.data.repository.ApiDataRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 
@@ -18,13 +19,13 @@ import kotlin.collections.ArrayList
 // maybe convert quizdata into live data?
 
 @HiltViewModel
-class QuizViewModel @Inject constructor( private val apiRepo: ApiDataRepository) {
+class QuizViewModel @Inject constructor( private val apiRepo: ApiDataRepository): ViewModel() {
 
     // backgroundColors = MutableLiveData<Array<Int>>(Array(currentCorrect.size){R.color.white})
 
-    val userScore = Score(application)
+   // val userScore = Score(application)
     val progress = MutableLiveData<Int>(0)
-    lateinit var quizDataList: MutableList<QuizData>
+    lateinit var cardList: MutableList<Card>
 
     val currentQuestion = MutableLiveData<String>() //test livedata
 
@@ -43,7 +44,7 @@ class QuizViewModel @Inject constructor( private val apiRepo: ApiDataRepository)
 
     //Repository
     suspend fun getApiData() {
-        quizDataList = ApiDataRepository.apiService.getQuizData(hashParams).toMutableList()
+       // cardList = ApiDataRepository.apiService.getQuizData(hashParams).toMutableList()
     }
 
 fun clearData(){
@@ -58,13 +59,13 @@ fun clearData(){
       //  userScore.start()
         //also need to fix livedata reseting?
 
-        currentQuestion.value = quizDataList.first().question
-        currentCorrect = quizDataList.first().correctAnswers
-        currentAnswerSet.addAll(quizDataList.first().answerList)
+        currentQuestion.value = cardList.first().question
+        currentCorrect = cardList.first().correctAnswers
+        currentAnswerSet.addAll(cardList.first().answerList)
         backgroundColors.value = Array(currentCorrect.size){R.color.white}
         imageType.addAll(Collections.nCopies(currentCorrect.size, null))
 
-        quizDataList.removeFirst()
+        cardList.removeFirst()
     }
 
 

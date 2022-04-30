@@ -1,15 +1,18 @@
 package com.example.clean_quiz.ui.viewmodel
 
 
-import android.widget.*
-
 import androidx.lifecycle.ViewModel
 import com.example.clean_quiz.data.User
+import com.example.clean_quiz.data.repository.QuizDataRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class StartViewModel: ViewModel() {
-    var userData: User = User()
+@HiltViewModel
+class StartViewModel @Inject constructor(private val quizDataRepo:QuizDataRepository): ViewModel() {
 
-    var name = ""
+
+    var fname = "test"
+    var lname = "sudo"
     var category = "Select a Category"
     var difficulty = -1
     var questionAmount = ""
@@ -22,7 +25,8 @@ class StartViewModel: ViewModel() {
         errorOutput = ""
         var errorMessage = ""
 
-        if (name == "") errorMessage += " name"
+        if (fname == "") errorMessage += " first name"
+        if (lname == "") errorMessage += " last name"
         if (category == "Select a Category") errorMessage += " category"
         if (difficulty == -1) errorMessage += " difficulty"
         if (questionAmount == "") errorMessage += " question amount"
@@ -32,16 +36,13 @@ class StartViewModel: ViewModel() {
         }
     }
 
-    fun test(){
-        val temp = 0
-    }
 /*    fun validateUserName(){}
     fun validateCategory(){}
     fun validateDifficulty(){}
     fun validateQuestionAmount(){}*/
 
 
-    fun radioCallback(radioGroup: RadioGroup, radioButtonID: Int) {
+ /*   fun radioCallback(radioGroup: RadioGroup, radioButtonID: Int) {
         val radioButton = radioGroup.findViewById<RadioButton>(radioButtonID)
         userData.difficutly = radioButton.text.toString()
     }
@@ -52,7 +53,7 @@ class StartViewModel: ViewModel() {
 
     fun userNameCallback(text: CharSequence) {
         userData.name = text.toString()
-    }
+    }*/
 
   /*  fun validateResponse():Boolean {
         // Fix implementation to notify individual fields of mistakes
@@ -65,20 +66,25 @@ class StartViewModel: ViewModel() {
                 && userData.difficutly != "Select a Category"
                 && userData.questionAmount in 1..20)
     }*/
-
+/*
     fun convertUserChoice():HashMap<String,String?> {
 
-    /*    var userParams = bundleOf()
+        var userParams = bundleOf()
         userParams.putSerializable("category", "Linux")
         userParams.putSerializable("difficulty", userData.difficutly,)
         userParams.putSerializable("limit", userData.questionAmount)
         return userParams
-    */
+
         return hashMapOf( "category" to userData.category,
             "difficulty" to userData.difficutly,
             "limit" to userData.questionAmount.toString(),
             "apiKey" to "hcUZqLCh8uTaXt121DQd5IQ7wv5GFIVA5YlaPxy4")
     }
+*/
+
+    // need to pass context.
+    suspend fun writeDatabase(): Int = quizDataRepo.writeUser(fname, lname)
+
 
 }
 
