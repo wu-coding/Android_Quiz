@@ -12,6 +12,6 @@ interface RecordDao {
     fun loadApiParams(record_ID:Int): Record
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertRecord(vararg record: Record)
+    fun insertRecord(record: Record):Long
 
 }

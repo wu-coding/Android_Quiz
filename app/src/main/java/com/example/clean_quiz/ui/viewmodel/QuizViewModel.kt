@@ -8,18 +8,21 @@ import com.example.clean_quiz.R
 
 import com.example.clean_quiz.data.models.Card
 import com.example.clean_quiz.data.repository.ApiDataRepository
+import com.example.clean_quiz.data.repository.ApiDataRepository_Impl
+import com.example.clean_quiz.data.repository.QuizDataRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 
 import java.util.*
 import javax.inject.Inject
 import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 //import com.example.clean_quiz.Answer
 
 // maybe convert quizdata into live data?
 
 @HiltViewModel
-class QuizViewModel @Inject constructor( private val apiRepo: ApiDataRepository): ViewModel() {
+class QuizViewModel @Inject constructor( private val quizDataRepository: QuizDataRepository, private val apidatarepositoryImpl: ApiDataRepository_Impl): ViewModel() {
 
     // backgroundColors = MutableLiveData<Array<Int>>(Array(currentCorrect.size){R.color.white})
 
@@ -42,9 +45,9 @@ class QuizViewModel @Inject constructor( private val apiRepo: ApiDataRepository)
     var updatePos = 0
 
 
-    //Repository
-    suspend fun getApiData() {
-       // cardList = ApiDataRepository.apiService.getQuizData(hashParams).toMutableList()
+    suspend fun loadData(apiParams:HashMap<String,String>) {
+        val apiData = apidatarepositoryImpl.getApiData(apiParams)
+        init()
     }
 
 fun clearData(){

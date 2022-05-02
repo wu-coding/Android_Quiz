@@ -56,13 +56,11 @@ class StartFragment : Fragment() {
              //   lateinit var writeDb:Deferred<Object>
                 var input: Long = 0
                 val temp = async (Dispatchers.IO) {
-                        input = startViewModel.writeDatabase() as Long
+                        input = startViewModel.writeToDatabase()
                     }
                 temp.await()
                 findNavController().navigate(StartFragmentDirections.nextQuiz(input))
                 }
-
-
             }
         }
 

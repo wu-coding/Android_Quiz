@@ -6,24 +6,56 @@ import com.example.clean_quiz.data.models.Database
 import com.example.clean_quiz.data.models.Record
 import javax.inject.Inject
 
-class QuizDataRepository @Inject constructor(private val dataBase:Database, private val userDao:UserDao, private val recordDao:RecordDao){
+class QuizDataRepository @Inject constructor(
+    private val dataBase: Database,
+    private val userDao: UserDao,
+    private val recordDao: RecordDao
+) {
 
-    suspend fun findUser(fname:String, lname:String):Int = userDao.findUser(fname, lname)
-    suspend fun insertUser( user: User): Long = userDao.insertUser(user)
+    fun getUser(fname: String, lname: String): Int = userDao.findUser(fname, lname)
+    fun insertUser(user: User): Long = userDao.insertUser(user)
+    fun getRecord(record_ID: Int): Record = recordDao.loadApiParams(record_ID)
+    fun insertRecord(record: Record): Long = recordDao.insertRecord(record)
 
-    suspend fun loadApiParams(record_ID:Int): Record = recordDao.loadApiParams(record_ID)
-    suspend fun insertRecord(vararg record: Record) = recordDao.insertRecord(*record)
-
-    suspend fun clearAllDataBase(){
+    suspend fun clearAllDataBase() {
         dataBase.clearAllTables()
     }
 
-    suspend fun writeUser(fname:String, lname:String):Int{
-        var getUser = findUser(fname,lname)
-        if(getUser == 0){
-            getUser = insertUser(User(0,fname,lname)) as Int
+
+    private fun checkUserExist(userId: Int): Boolean {
+        return userId == 0
+    }
+
+    suspend fun createUser(fname: String, lname: String): Long {
+        val userId = getUser(fname, lname)
+        return if (checkUserExist(userId)) {
+            userId.toLong()
+        } else {
+            insertUser(User(0, fname, lname))
         }
-        return getUser
+    }
+
+    suspend fun createRecord(
+        userId: Int,
+        category: String,
+        difficulty: String,
+        questionAmount: Int
+    ): Long {
+        val tempRecord = Record(
+            0, userId, category, difficulty, questionAmount,
+            0, 0, 0
+        )
+        return insertRecord(tempRecord)
+    }
+
+
+    suspend fun loadApiParam(record_ID: Int): HashMap<String, String> {
+        val tempRecord = getRecord(record_ID)
+        return hashMapOf<String, String>(
+            "category" to tempRecord.category,
+            "difficulty" to tempRecord.difficulty,
+            "limit" to tempRecord.questionAmount.toString()
+        )
     }
 
 }

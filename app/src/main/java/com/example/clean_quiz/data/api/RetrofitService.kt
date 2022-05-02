@@ -10,7 +10,7 @@ import retrofit2.http.QueryMap
 
 interface RetrofitService {
     @GET("api/v1/questions")
-    suspend fun getApiData(@QueryMap getParam: HashMap<String, String?>):List<Card>
+    suspend fun getApiData(@QueryMap getParam: HashMap<String, String>):List<Card>
 //suspend fun getQuizData(@QueryMap getParam:Map<String,String> ):retrofit2.Call<List<QuizData>>
 }
 //https://quizapi.io/api/v1/question

@@ -23,8 +23,8 @@ data class Record(
     @ColumnInfo(name = "category") val category:String,
     @ColumnInfo(name = "difficulty") val difficulty:String,
     @ColumnInfo(name = "question_amount") val questionAmount:Int,
-    @ColumnInfo(name = "correct_answers") val correctAnswers:String,
-    @ColumnInfo(name = "wrong_answers")val wrongAnswers:String,
+    @ColumnInfo(name = "correct_answers") val correctAnswers:Int,
+    @ColumnInfo(name = "wrong_answers")val wrongAnswers:Int,
     @ColumnInfo(name = "time_taken") val timeTaken:Int  //Can switch to Time
 )
 

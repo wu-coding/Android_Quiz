@@ -3,19 +3,21 @@ package com.example.clean_quiz.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import com.example.clean_quiz.data.User
+import com.example.clean_quiz.data.models.Record
+import com.example.clean_quiz.data.repository.ApiDataRepository_Impl
 import com.example.clean_quiz.data.repository.QuizDataRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class StartViewModel @Inject constructor(private val quizDataRepo:QuizDataRepository): ViewModel() {
+class StartViewModel @Inject constructor(private val quizDataRepository: QuizDataRepository): ViewModel() {
 
 
     var fname = "test"
     var lname = "sudo"
     var category = "Select a Category"
     var difficulty = -1
-    var questionAmount = ""
+    var questionAmount = "0"
     var errorOutput = ""
 
 // name length = 0
@@ -29,7 +31,7 @@ class StartViewModel @Inject constructor(private val quizDataRepo:QuizDataReposi
         if (lname == "") errorMessage += " last name"
         if (category == "Select a Category") errorMessage += " category"
         if (difficulty == -1) errorMessage += " difficulty"
-        if (questionAmount == "") errorMessage += " question amount"
+        if (questionAmount.toString() == "") errorMessage += " question amount"
 
         if (errorMessage.length > 0){
             errorOutput = "Please fill out the empty section:" + errorMessage
@@ -82,9 +84,11 @@ class StartViewModel @Inject constructor(private val quizDataRepo:QuizDataReposi
     }
 */
 
-    // need to pass context.
-    suspend fun writeDatabase(): Int = quizDataRepo.writeUser(fname, lname)
-
+    //Write User and Record, Retrieve Record row ID
+    suspend fun writeToDatabase():Long {
+        val rowId = quizDataRepository.createUser(fname, lname)
+        return quizDataRepository.createRecord(rowId.toInt(),category, difficulty.toString(), questionAmount.toInt())
+    }
 
 }
 
