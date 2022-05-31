@@ -11,7 +11,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class StartViewModel @Inject constructor(private val quizDataRepository: QuizDataRepository): ViewModel() {
-
+    init {
+        
+    }
 
     var fname = "test"
     var lname = "sudo"
@@ -83,11 +85,17 @@ class StartViewModel @Inject constructor(private val quizDataRepository: QuizDat
             "apiKey" to "hcUZqLCh8uTaXt121DQd5IQ7wv5GFIVA5YlaPxy4")
     }
 */
-
+val _category = "linux"
+    val _difficulty = "easy"
+    val _questionAmount = "5"
+    suspend fun clearDatabase(){
+        quizDataRepository.clearAllDataBase()
+    }
     //Write User and Record, Retrieve Record row ID
     suspend fun writeToDatabase():Long {
-        val rowId = quizDataRepository.createUser(fname, lname)
-        return quizDataRepository.createRecord(rowId.toInt(),category, difficulty.toString(), questionAmount.toInt())
+        //val rowId = quizDataRepository.createUser(fname, lname)
+        val rowId = quizDataRepository.insertUser(User(0,"test", "alex"))
+        return quizDataRepository.createRecord(rowId.toInt(),_category, _difficulty, _questionAmount.toInt())
     }
 
 }

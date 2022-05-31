@@ -8,71 +8,139 @@
         <import type="android.view.View"/>
 
     </data>
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/frameLayout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
 
-
-    <Chronometer
-        android:id="@+id/time_taken"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="56dp"
-        android:layout_marginRight="56dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <com.google.android.material.progressindicator.LinearProgressIndicator
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/frameLayout"
         android:layout_width="match_parent"
-        android:layout_height="10dp"
-        app:trackCornerRadius="10dp"
-        android:progress="@{viewModel.progress}"/>
+        android:layout_height="match_parent">
 
 
-    <TextView
-        android:id="@+id/questionText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="@={viewModel.currentQuestion}"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-       />
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/linearProgressIndicator"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_marginBottom="20dp"
+            android:progress="@{viewModel.progress}"
+            app:layout_constraintBottom_toTopOf="@+id/guideline2"
+            app:layout_constraintTop_toTopOf="parent"
+            app:trackCornerRadius="10dp"
+            tools:layout_editor_absoluteX="0dp" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/quiz_recyclerView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/questionText"
-        tools:listitem="@layout/quiz_fragment_item">
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="51dp" />
 
-    </androidx.recyclerview.widget.RecyclerView>
+        <TextView
+            android:id="@+id/question_left_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="37dp"
+            android:text="Questions Left"
+            app:layout_constraintEnd_toStartOf="@+id/question_left_display"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/guideline2" />
+
+        <TextView
+            android:id="@+id/question_left_display"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@={`` + viewModel.questionAmount}"
+            app:layout_constraintBottom_toBottomOf="@+id/question_left_text"
+            app:layout_constraintEnd_toStartOf="@+id/score_text"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/question_left_text" />
+
+        <TextView
+            android:id="@+id/score_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Score"
+            app:layout_constraintBottom_toBottomOf="@+id/question_left_display"
+            app:layout_constraintEnd_toStartOf="@+id/score_display"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/question_left_display" />
+
+        <TextView
+            android:id="@+id/score_display"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@={`` + viewModel.showScore}"
+            app:layout_constraintBottom_toBottomOf="@+id/score_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/score_text" />
 
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/submit_answers"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="56dp"
-        android:layout_marginRight="56dp"
-        android:text="Submit"
-        app:layout_constraintEnd_toStartOf="@+id/next_question"
-        tools:layout_editor_absoluteY="534dp" />
+        <TextView
+            android:id="@+id/questionText"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginBottom="43dp"
+            android:text="@={viewModel.currentQuestion}"
+            app:layout_constraintBottom_toTopOf="@+id/quiz_recyclerView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/question_left_text" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/next_question"
-        style="@style/Widget.MaterialComponents.Button.TextButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Next"
-        tools:layout_editor_absoluteX="238dp"
-        tools:layout_editor_absoluteY="534dp" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/quiz_recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="148dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/questionText"
+            tools:listitem="@layout/quiz_fragment_item">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/submit_answers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Submit"
+            app:layout_constraintBottom_toBottomOf="@+id/next_question"
+            app:layout_constraintEnd_toStartOf="@+id/next_question"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/next_question"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:text="Next"
+            app:layout_constraintBottom_toTopOf="@+id/guideline4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/submit_answers" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="686dp" />
+
+        <Chronometer
+            android:id="@+id/time_taken"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginTop="13dp"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/guideline4" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

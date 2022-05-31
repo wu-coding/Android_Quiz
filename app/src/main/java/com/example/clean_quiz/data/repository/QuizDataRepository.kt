@@ -4,6 +4,8 @@ import com.example.clean_quiz.data.DAO.*
 import com.example.clean_quiz.data.User
 import com.example.clean_quiz.data.models.Database
 import com.example.clean_quiz.data.models.Record
+import com.example.clean_quiz.data.models.RecordPreferences
+import com.example.clean_quiz.data.models.RecordScore
 import javax.inject.Inject
 
 class QuizDataRepository @Inject constructor(
@@ -15,7 +17,10 @@ class QuizDataRepository @Inject constructor(
     fun getUser(fname: String, lname: String): Int = userDao.findUser(fname, lname)
     fun insertUser(user: User): Long = userDao.insertUser(user)
     fun getRecord(record_ID: Int): Record = recordDao.loadApiParams(record_ID)
-    fun insertRecord(record: Record): Long = recordDao.insertRecord(record)
+
+    fun updateRecordPreferences(recordPreferences: RecordPreferences) = recordDao.updateRecordPreferences(recordPreferences)
+    fun updateRecordScore(recordScore: RecordScore) = recordDao.updateRecordScore(recordScore)
+  //  fun insertRecord(record: Record): Long = recordDao.insertRecord(record)
 
     suspend fun clearAllDataBase() {
         dataBase.clearAllTables()
@@ -26,7 +31,7 @@ class QuizDataRepository @Inject constructor(
         return userId == 0
     }
 
-    suspend fun createUser(fname: String, lname: String): Long {
+     fun createUser(fname: String, lname: String): Long {
         val userId = getUser(fname, lname)
         return if (checkUserExist(userId)) {
             userId.toLong()
@@ -35,7 +40,8 @@ class QuizDataRepository @Inject constructor(
         }
     }
 
-    suspend fun createRecord(
+
+   /* suspend fun createRecord(
         userId: Int,
         category: String,
         difficulty: String,
@@ -46,7 +52,7 @@ class QuizDataRepository @Inject constructor(
             0, 0, 0
         )
         return insertRecord(tempRecord)
-    }
+    }*/
 
 
     suspend fun loadApiParam(record_ID: Int): HashMap<String, String> {
@@ -54,8 +60,10 @@ class QuizDataRepository @Inject constructor(
         return hashMapOf<String, String>(
             "category" to tempRecord.category,
             "difficulty" to tempRecord.difficulty,
-            "limit" to tempRecord.questionAmount.toString()
+            "limit" to tempRecord.questionAmount.toString(),
+            "apiKey" to "hcUZqLCh8uTaXt121DQd5IQ7wv5GFIVA5YlaPxy4"
         )
     }
+
 
 }

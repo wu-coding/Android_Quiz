@@ -51,9 +51,7 @@ class StartFragment : Fragment() {
         if (startViewModel.errorOutput.length > 0){
             Toast.makeText(requireContext(), startViewModel.errorOutput, Toast.LENGTH_SHORT).show()
         }else{
-         //   findNavController().navigate(StartFragmentDirections.nextQuiz(sendUserParams))
             viewLifecycleOwner.lifecycleScope.launch(){
-             //   lateinit var writeDb:Deferred<Object>
                 var input: Long = 0
                 val temp = async (Dispatchers.IO) {
                         input = startViewModel.writeToDatabase()
@@ -61,6 +59,12 @@ class StartFragment : Fragment() {
                 temp.await()
                 findNavController().navigate(StartFragmentDirections.nextQuiz(input))
                 }
+            }
+        }
+
+        binding.clearDatabase.setOnClickListener{
+            viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
+                startViewModel.clearDatabase()
             }
         }
 

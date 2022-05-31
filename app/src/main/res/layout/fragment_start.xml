@@ -4,6 +4,7 @@
     tools:context=".ui.views.StartFragment">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.example.clean_quiz.ui.viewmodel.StartViewModel" />
@@ -22,116 +23,202 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/firstName"
+            <TextView
+                android:id="@+id/User"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="First Name">
+                android:layout_margin="10dp"
+                android:layout_weight=".20"
+                android:gravity="center"
+                android:text="User Name"
+                android:textSize="24sp" />
 
 
-                <com.google.android.material.textfield.TextInputEditText
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/firstName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@{viewModel.fname}"/>
+                    android:layout_weight=".05"
+                    android:gravity="center"
+                    android:hint="First Name">
 
-            </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:gravity="center"
+                        android:text="@{viewModel.fname}"
+                        android:textSize="12sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/lastName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight=".05"
+                android:gravity="center_vertical"
                 android:hint="Last Name">
 
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@{viewModel.lname}"/>
+                    android:layout_margin="10dp"
+                    android:gravity="center_horizontal"
+                    android:text="@{viewModel.lname}"
+                    android:textSize="12sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/category_spinner"
+
+            <TextView
+                android:id="@+id/Trivia"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu">
+                android:layout_margin="10dp"
+                android:layout_weight=".20"
+                android:gravity="center"
+                android:text="Quiz Preferences"
+                android:textSize="24sp" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/category_spinner"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight=".10">
 
                 <AutoCompleteTextView
                     android:id="@+id/autoCompleteTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:gravity="center"
+                    android:hint="Category"
                     android:inputType="none"
-                    android:hint ="Select diff"
-                    android:text="@{viewModel.category}"/>
+                    android:text="@{viewModel.category}"
+                    android:textSize="12sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight=".20"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/Difficulty"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:padding="10dp"
+                        android:text="Difficulty"
+                        android:textSize="20sp" />
+
+                    <RadioGroup
+                        android:id="@+id/difficulty_radiogroup"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:checkedButton="@{viewModel.difficulty}"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.radiobutton.MaterialRadioButton
+
+                            android:id="@+id/easy_radio"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="easy" />
+
+                        <com.google.android.material.radiobutton.MaterialRadioButton
+
+                            android:id="@+id/medium_radio"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="medium" />
+
+                        <com.google.android.material.radiobutton.MaterialRadioButton
+
+                            android:id="@+id/hard_radio"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="hard" />
+
+                    </RadioGroup>
+                </LinearLayout>
                 <!--android:onItemSelectedListener="@{viewModel.spinnerListener}"-->
 
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <RadioGroup
-                android:id="@+id/difficulty_radiogroup"
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:checkedButton="@{viewModel.difficulty}"
-                android:orientation="horizontal">
+                android:layout_weight=".20"
+                android:gravity="center_vertical">
 
-                <com.google.android.material.radiobutton.MaterialRadioButton
-
-                    android:id="@+id/easy_radio"
+                <TextView
+                    android:id="@+id/textView4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="easy" />
+                    android:layout_weight=".70"
+                    android:gravity="center_vertical"
+                    android:includeFontPadding="false"
+                    android:text="Question Amount"
+                    android:textSize="20sp" />
 
-                <com.google.android.material.radiobutton.MaterialRadioButton
-
-                    android:id="@+id/medium_radio"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/limit_text"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="medium" />
+                    android:layout_weight=".30"
+                    android:hint="1-20">
 
-                <com.google.android.material.radiobutton.MaterialRadioButton
 
-                    android:id="@+id/hard_radio"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="hard" />
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberSigned"
+                        android:tag="numberSigned"
+                        android:text="@{viewModel.questionAmount}" />
 
-            </RadioGroup>
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/limit_text"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Choose between 1 and 20">
+                android:layout_weight=".20"
+                android:gravity="center">
 
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/startButton"
+                    android:layout_width="wrap_content"
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="numberSigned"
-                    android:tag="numberSigned"
-                    android:text="@{viewModel.questionAmount}"/>
+                    android:minWidth="0dp"
+                    android:text="Start" />
 
-            </com.google.android.material.textfield.TextInputLayout>
-
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/startButton"
-                android:layout_width="297dp"
-                android:layout_height="40dp"
-                android:layout_weight="1"
-                android:text="Start"
-
-                />
+                <Button
+                    android:id="@+id/clear_database"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="clear" />
+            </LinearLayout>
 
         </LinearLayout>
     </FrameLayout>

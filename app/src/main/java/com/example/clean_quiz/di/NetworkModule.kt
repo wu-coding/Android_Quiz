@@ -3,6 +3,7 @@ package com.example.clean_quiz.di
 import android.content.Context
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.example.clean_quiz.data.ApiDataJsonAdapter
 import com.example.clean_quiz.data.models.Database
 import com.example.clean_quiz.data.api.RetrofitService
 import com.squareup.moshi.Moshi
@@ -26,7 +27,7 @@ object NetworkModule {
     @Provides
     fun provideMoshi():Moshi = Moshi.Builder()
             .add(PairAdapterFactory())
-            // add?
+            .add(ApiDataJsonAdapter())
             .add(KotlinJsonAdapterFactory())
             .build()
 

@@ -2,12 +2,13 @@ package com.example.clean_quiz.ui.viewmodel
 
 import android.content.Context
 import android.widget.Chronometer
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.clean_quiz.R
+import com.example.clean_quiz.data.models.AnswerCheckStatus
 
-import com.example.clean_quiz.data.models.Card
-import com.example.clean_quiz.data.repository.ApiDataRepository
+import com.example.clean_quiz.data.models.QuestionAnswerSet
+import com.example.clean_quiz.data.models.RecordScore
 import com.example.clean_quiz.data.repository.ApiDataRepository_Impl
 import com.example.clean_quiz.data.repository.QuizDataRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,108 +22,168 @@ import kotlin.collections.HashMap
 
 // maybe convert quizdata into live data?
 
+data class CardUiState(
+    var answerSelected:Boolean,
+    var answerUpdated:Boolean,
+    var answerStatus: AnswerCheckStatus?
+
+  //  val storeInput: (Int) -> Unit,
+   // val checkRow: (Int) -> AnswerCheckStatus
+)
+
+
 @HiltViewModel
-class QuizViewModel @Inject constructor( private val quizDataRepository: QuizDataRepository, private val apidatarepositoryImpl: ApiDataRepository_Impl): ViewModel() {
-
-    // backgroundColors = MutableLiveData<Array<Int>>(Array(currentCorrect.size){R.color.white})
-
-   // val userScore = Score(application)
+class QuizViewModel @Inject constructor(
+    private val quizDataRepository: QuizDataRepository,
+    private val apidatarepositoryImpl: ApiDataRepository_Impl
+) : ViewModel() {
+    // val userScore = Score(application)
+    val currentScore = Score()
+    val showScore = MutableLiveData<Int>(0)
     val progress = MutableLiveData<Int>(0)
-    lateinit var cardList: MutableList<Card>
+    var questionAmount = MutableLiveData<Int>()
+    val currentQuestion = MutableLiveData<String>("")
 
-    val currentQuestion = MutableLiveData<String>() //test livedata
+    lateinit var currentQuestionAnswerSet: QuestionAnswerSet
 
-    lateinit var currentCorrect: List<Boolean>
+    var cardUiStateList =  ArrayList<CardUiState>()
 
-    val currentAnswerSet = ArrayList<String>(6)
+    lateinit var apiData:MutableList<QuestionAnswerSet>
 
-    val backgroundColors = MutableLiveData<Array<Int>>()
+    var currentAnswerList = listOf<String>()
 
-    val imageType = ArrayList<Int?>(6)
+    var userInput = mutableSetOf<Int>()
 
-    val userInput = mutableSetOf<Int>()
+    var correctSet = setOf<Int>()
 
-    var updatePos = 0
-
-
-    suspend fun loadData(apiParams:HashMap<String,String>) {
-        val apiData = apidatarepositoryImpl.getApiData(apiParams)
-        init()
+    suspend fun loadApiData(rowID: Long) {
+        val apiParams = quizDataRepository.loadApiParam(rowID.toInt())
+        apiData = apidatarepositoryImpl.getApiData(apiParams).toMutableList()
+        questionAmount.postValue(apiData.size)
     }
 
-fun clearData(){
-    currentAnswerSet.clear()
-   // backgroundColors.value?.set(null)
-    imageType.clear()
-    updatePos = 0
-    userInput.clear()
+    /*fun init() {
+     //   currentQuestionAnswerSet = QuestionAnswerSet(null,null,null)
+        loadNextQuestionSet()
+        currentScore = Score()
+        for (answer in currentAnswerList) {
+            cardUiStateList.add(
+                CardUiState(
+                    answerSelected = false,
+                    answerUpdated = false,
+                    answerStatus = null
+                )
+            )
+        }
+    }*/
 
+    fun createCardStateList(){
+        for (answer in currentAnswerList) {
+            cardUiStateList.add(
+                CardUiState(
+                    answerSelected = false,
+                    answerUpdated = false,
+                    answerStatus = null
+                )
+            )
+        }
+    }
+
+
+    fun loadNextQuestionSet(){
+        currentQuestionAnswerSet = apiData.last()
+        currentQuestion.value = currentQuestionAnswerSet.question
+        currentAnswerList = currentQuestionAnswerSet.answerList
+        correctSet = currentQuestionAnswerSet.correctSet
+        createCardStateList()
+        questionAmount.setValue(questionAmount.value?.minus(1))
+    }
+
+    fun clearQuestionSet(){
+        apiData.removeLast()
+        cardUiStateList.removeAll(cardUiStateList)
+        userInput.clear()
+
+        showScore.value = currentScore.totalScore
+        progress.value = progress.value?.plus(1)}
+
+
+    fun submitAnswers(): Set<Int> {
+        val updatedRows = userInput + correctSet
+
+        for(i in updatedRows){
+            cardUiStateList[i].answerUpdated = true
+            cardUiStateList[i].answerStatus = checkAnswerRow(i)
+        }
+        calculateScore()
+        return updatedRows
+    }
+
+
+    fun checkAnswerRow(pos: Int): AnswerCheckStatus {
+        val temp = userInput.contains(pos)
+        val temp2 = correctSet.contains(pos)
+        if (userInput.contains(pos) && correctSet.contains(pos)) {
+            return AnswerCheckStatus.CORRECT
+        } else if (userInput.contains(pos)) {
+            return AnswerCheckStatus.WRONG
+        } else {
+            return AnswerCheckStatus.NOTSELECTED
+        }
+    }
+
+    val storeUserInput: (Int) -> Unit = { pos: Int ->
+        if (!userInput.contains(pos)) {
+            userInput.add(pos)
+        } else {
+            userInput.remove(pos)
+        }
+    }
+
+    fun calculateScore() {
+        if (correctSet.equals(userInput)) {
+            currentScore.correct ++
+        } else {
+            currentScore.wrong ++
+        }
+    }
+
+    fun writeToDatabase(){
+     val scoreParam = RecordScore(0,currentScore.correct,currentScore.wrong,currentScore.timeTaken)
+    quizDataRepository.updateRecordScore()
+    }
 }
-    fun loadData() {
-      //  userScore.start()
-        //also need to fix livedata reseting?
 
-        currentQuestion.value = cardList.first().question
-        currentCorrect = cardList.first().correctAnswers
-        currentAnswerSet.addAll(cardList.first().answerList)
-        backgroundColors.value = Array(currentCorrect.size){R.color.white}
-        imageType.addAll(Collections.nCopies(currentCorrect.size, null))
 
-        cardList.removeFirst()
+//class Score(context: Context) {
+    class Score(var correct: Int = 0,
+                var wrong: Int = 0,
+                var totalScore: Int = 0,
+                var timeTaken:Int =0) {
+
+    fun updateTime(timeParam:String){
+        timeTaken = timeParam.toInt()
     }
 
-
-    fun checkAnswers():Boolean {
-// we can use a livedata stack to keep track of updated values?
-        var testAnswers: Boolean = true
-        for ((i, value) in currentCorrect.withIndex()) {
-            if (value) {
-                if (userInput.contains(i)) {
-                    imageType[i] = R.drawable.correct_answer
-                    userInput.remove(i)
-                } else {
-                    imageType[i] =  R.drawable.correct_answer
-                    backgroundColors.value?.set(i, R.color.yellow)
-                    testAnswers = false
-                }
-            }
+    fun updateScore(score:Boolean){
+        if(score){
+            correct++
+        }else{
+            wrong++
         }
-
-        if(userInput.size > 0){
-            for(i in userInput){
-       //         userInput.remove(i)
-                imageType[i] = R.drawable.wrong_answer
-                backgroundColors.value?.set(i, R.color.red)
-            }
-        }
-     //   userScore.updateScore(testAnswers)
-        return testAnswers
-    }
-
-        // check view visible or not?
-        val getUserInput = { pos:Int ->
-            if (userInput.contains(pos)){
-                backgroundColors.value?.set(pos, R.color.white)
-                userInput.remove(pos)
-            }else{
-                userInput.add(pos)
-                backgroundColors.value?.set(pos,  R.color.light_blue_600)
-            }
-            updatePos = pos
-            backgroundColors.value = backgroundColors.value
-
+        if(correct > wrong){
+            totalScore = correct - wrong
+        }else{
+            totalScore = 0
         }
     }
 
+    // maybe after each press calc time?
+  /*  fun start() {
+        timeTaken.start()
+    }
 
-
-class Score(context:Context){
-    val timeTaken = Chronometer(context)
-
-    var correct:Int = 0
-    var wrong:Int=0
-
-    fun updateScore(test:Boolean){ if (test) correct++ else wrong--}
-    fun start(){timeTaken.start()}
-    fun stop(){timeTaken.stop()}
+    fun stop() {
+        timeTaken.stop()
+    }*/
 }
