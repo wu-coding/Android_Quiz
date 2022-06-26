@@ -3,99 +3,48 @@ package com.example.clean_quiz.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import com.example.clean_quiz.data.User
-import com.example.clean_quiz.data.models.Record
+import com.example.clean_quiz.data.models.FullRecord
+import com.example.clean_quiz.data.models.RecordPreferences
 import com.example.clean_quiz.data.repository.ApiDataRepository_Impl
 import com.example.clean_quiz.data.repository.QuizDataRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class StartViewModel @Inject constructor(private val quizDataRepository: QuizDataRepository): ViewModel() {
-    init {
-        
-    }
+class StartViewModel @Inject constructor(private val quizDataRepository: QuizDataRepository) :
+    ViewModel() {
 
-    var fname = "test"
-    var lname = "sudo"
-    var category = "Select a Category"
-    var difficulty = -1
-    var questionAmount = "0"
+    var currentUser = User(1, "Sam", "Two")
+    var currentPreferences = RecordPreferences(0, 1, "Linux", "easy", 2)
+    // var currentPreferences = RecordPreferences(0,0,"","",0)
+
+
     var errorOutput = ""
-
-// name length = 0
-    // just make it a toast?
 
     fun validateResponse() {
         errorOutput = ""
         var errorMessage = ""
 
-        if (fname == "") errorMessage += " first name"
-        if (lname == "") errorMessage += " last name"
-        if (category == "Select a Category") errorMessage += " category"
-        if (difficulty == -1) errorMessage += " difficulty"
-        if (questionAmount.toString() == "") errorMessage += " question amount"
+        if (currentUser.firstName == "") errorMessage += " first name"
+        if (currentUser.lastName == "") errorMessage += " last name"
+        if (currentPreferences.category == "Select a Category") errorMessage += " category"
+        if (currentPreferences.difficulty == "") errorMessage += " difficulty"
+        if (currentPreferences.question_amount.toString() == "") errorMessage += " question amount"
 
-        if (errorMessage.length > 0){
+        if (errorMessage.length > 0) {
             errorOutput = "Please fill out the empty section:" + errorMessage
         }
     }
 
-/*    fun validateUserName(){}
-    fun validateCategory(){}
-    fun validateDifficulty(){}
-    fun validateQuestionAmount(){}*/
 
-
- /*   fun radioCallback(radioGroup: RadioGroup, radioButtonID: Int) {
-        val radioButton = radioGroup.findViewById<RadioButton>(radioButtonID)
-        userData.difficutly = radioButton.text.toString()
-    }
-
-    fun questAmountCallback(text: CharSequence) {
-        userData.questionAmount = text.toString().toInt()
-    }
-
-    fun userNameCallback(text: CharSequence) {
-        userData.name = text.toString()
-    }*/
-
-  /*  fun validateResponse():Boolean {
-        // Fix implementation to notify individual fields of mistakes
-        return !( listOf(
-            userData.name,
-            userData.difficutly,
-            userData.questionAmount,
-            userData.name
-        ).any { it == null}
-                && userData.difficutly != "Select a Category"
-                && userData.questionAmount in 1..20)
-    }*/
-/*
-    fun convertUserChoice():HashMap<String,String?> {
-
-        var userParams = bundleOf()
-        userParams.putSerializable("category", "Linux")
-        userParams.putSerializable("difficulty", userData.difficutly,)
-        userParams.putSerializable("limit", userData.questionAmount)
-        return userParams
-
-        return hashMapOf( "category" to userData.category,
-            "difficulty" to userData.difficutly,
-            "limit" to userData.questionAmount.toString(),
-            "apiKey" to "hcUZqLCh8uTaXt121DQd5IQ7wv5GFIVA5YlaPxy4")
-    }
-*/
-val _category = "linux"
-    val _difficulty = "easy"
-    val _questionAmount = "5"
-    suspend fun clearDatabase(){
+    suspend fun clearDatabase() {
         quizDataRepository.clearAllDataBase()
     }
-    //Write User and Record, Retrieve Record row ID
-    suspend fun writeToDatabase():Long {
-        //val rowId = quizDataRepository.createUser(fname, lname)
-        val rowId = quizDataRepository.insertUser(User(0,"test", "alex"))
-        return quizDataRepository.createRecord(rowId.toInt(),_category, _difficulty, _questionAmount.toInt())
+
+    //somehow has problems when starting from empty db? User problems?
+    suspend fun writeToDatabase() {
+        quizDataRepository.getUser(currentUser.firstName, currentUser.lastName)
+        quizDataRepository.updateRecordPreferences(currentPreferences)
     }
 
 }

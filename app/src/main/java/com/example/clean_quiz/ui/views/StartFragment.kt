@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.RadioButton
+import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
@@ -45,20 +47,27 @@ class StartFragment : Fragment() {
         val arrayAdapter = ArrayAdapter(requireContext(), R.layout.list_item, items)
         binding.autoCompleteTextView.setAdapter(arrayAdapter)
 
+        binding.difficultyRadiogroup.setOnCheckedChangeListener(){
+            group, checkedID -> val RadioId = group.findViewById<RadioButton>(checkedID)
+            startViewModel.currentPreferences.difficulty = RadioId.text.toString()
+        }
+
 
         // should use setError() https://stackoverflow.com/questions/64141542/data-binding-and-input-field-validation-and-manipulation-activity-fragment-nav
         binding.startButton.setOnClickListener() {
+            startViewModel.validateResponse()
         if (startViewModel.errorOutput.length > 0){
             Toast.makeText(requireContext(), startViewModel.errorOutput, Toast.LENGTH_SHORT).show()
         }else{
             viewLifecycleOwner.lifecycleScope.launch(){
                 var input: Long = 0
-                val temp = async (Dispatchers.IO) {
-                        input = startViewModel.writeToDatabase()
+                val writeDB = async (Dispatchers.IO) {
+                        startViewModel.writeToDatabase()
                     }
-                temp.await()
-                findNavController().navigate(StartFragmentDirections.nextQuiz(input))
-                }
+                writeDB.await()
+          //      view.findViewById<Action>(R.id.action.)
+                 findNavController().navigate(R.id.next_page_quiz)
+            }
             }
         }
 
@@ -66,6 +75,9 @@ class StartFragment : Fragment() {
             viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
                 startViewModel.clearDatabase()
             }
+        }
+        binding.skipResults.setOnClickListener{
+            findNavController().navigate(R.id.skip_results)
         }
 
 

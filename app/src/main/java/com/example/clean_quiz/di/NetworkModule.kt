@@ -4,8 +4,11 @@ import android.content.Context
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.clean_quiz.data.ApiDataJsonAdapter
+import com.example.clean_quiz.data.DAO.RecordDao
+import com.example.clean_quiz.data.DAO.UserDao
 import com.example.clean_quiz.data.models.Database
 import com.example.clean_quiz.data.api.RetrofitService
+import com.example.clean_quiz.data.repository.QuizDataRepository
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Binds
@@ -54,5 +57,11 @@ object NetworkModule {
     @Singleton
     @Provides
     fun provideRecordDao(db: Database) = db.RecordDao()
+
+    @Singleton
+    @Provides
+    fun provideRepository(db: Database, userDao: UserDao, recordDao: RecordDao):QuizDataRepository{
+        return QuizDataRepository(db, userDao, recordDao)
+    }
 
 }

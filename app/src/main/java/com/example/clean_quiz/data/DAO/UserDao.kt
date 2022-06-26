@@ -9,8 +9,8 @@ import com.example.clean_quiz.data.User
 @Dao
 interface UserDao {
     @Query("Select * From user where first_name = :fname AND last_name = :lname")
-    fun findUser(fname:String, lname:String):Int
+    fun findUser(fname:String, lname:String):User?
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertUser(user: User): Long
+    @Insert(onConflict = OnConflictStrategy.ABORT)
+    fun insertUser(user: User)
 }

@@ -1,12 +1,16 @@
 package com.example.clean_quiz.data.repository
 
+import androidx.sqlite.db.SimpleSQLiteQuery
 import com.example.clean_quiz.data.DAO.*
 import com.example.clean_quiz.data.User
-import com.example.clean_quiz.data.models.Database
-import com.example.clean_quiz.data.models.Record
-import com.example.clean_quiz.data.models.RecordPreferences
-import com.example.clean_quiz.data.models.RecordScore
+import com.example.clean_quiz.data.models.*
+import com.example.clean_quiz.utils.addQueryParam
+import com.example.clean_quiz.utils.addQuotes
+import java.sql.SQLData
+import java.util.*
 import javax.inject.Inject
+import kotlin.collections.HashMap
+import kotlin.properties.Delegates
 
 class QuizDataRepository @Inject constructor(
     private val dataBase: Database,
@@ -14,56 +18,121 @@ class QuizDataRepository @Inject constructor(
     private val recordDao: RecordDao
 ) {
 
-    fun getUser(fname: String, lname: String): Int = userDao.findUser(fname, lname)
-    fun insertUser(user: User): Long = userDao.insertUser(user)
-    fun getRecord(record_ID: Int): Record = recordDao.loadApiParams(record_ID)
+    lateinit var userData: User
+    lateinit var userPrefData: RecordPreferences
+    lateinit var userScoreData: RecordScore
 
-    fun updateRecordPreferences(recordPreferences: RecordPreferences) = recordDao.updateRecordPreferences(recordPreferences)
+    fun getUser(fname: String, lname: String) {
+        val userValue = userDao.findUser(fname, lname)
+
+        if (userValue != null) {
+            userData = userValue
+        } else {
+            userData = User(0, fname, lname)
+            insertUser(userData)
+        }
+    }
+
+    fun getUserRecords(firstName:String, lastName:String) = recordDao.getUserRecords(firstName, lastName)
+    fun insertUser(user: User) = userDao.insertUser(user)
     fun updateRecordScore(recordScore: RecordScore) = recordDao.updateRecordScore(recordScore)
-  //  fun insertRecord(record: Record): Long = recordDao.insertRecord(record)
+    fun getTop10() = recordDao.getTop10()
+    fun getCategoryRecords(categoryID: String) = recordDao.getCategoryRecords(categoryID)
 
-    suspend fun clearAllDataBase() {
+
+    //Get rid of Long?
+    fun updateRecordPreferences(recordPreferences: RecordPreferences): Long {
+        userPrefData = recordPreferences
+        userPrefData.user_id = userData.userId
+      //  val temp = userPrefData.isInitialized
+        return recordDao.updateRecordPreferences(userPrefData)
+    }
+
+
+    fun clearAllDataBase() {
         dataBase.clearAllTables()
     }
 
 
-    private fun checkUserExist(userId: Int): Boolean {
-        return userId == 0
-    }
+    fun searchRecordsQuery(searchValue: SearchPreferences) = recordDao.searchRecordsQuery(searchRecordsParam(searchValue))
 
-     fun createUser(fname: String, lname: String): Long {
-        val userId = getUser(fname, lname)
-        return if (checkUserExist(userId)) {
-            userId.toLong()
-        } else {
-            insertUser(User(0, fname, lname))
-        }
-    }
+    // Should maybe make class nullable instead?
+    fun searchRecordsParam(searchValue: SearchPreferences):SimpleSQLiteQuery {
+
+        var queryString =
+            "Select * From record" + " INNER JOIN user ON record.user_id = user.user_id "
+
+        var queryArgs = StringBuilder()
+
+        var storeQueryParams:Queue<String> = LinkedList<String>()
 
 
-   /* suspend fun createRecord(
-        userId: Int,
-        category: String,
-        difficulty: String,
-        questionAmount: Int
-    ): Long {
-        val tempRecord = Record(
-            0, userId, category, difficulty, questionAmount,
-            0, 0, 0
+        storeQueryParams.add(
+                "first_name == ".addQuotes(searchValue.first_name)
+
         )
-        return insertRecord(tempRecord)
-    }*/
+        storeQueryParams.add(
+                "last_name == ".addQuotes(searchValue.last_name)
+
+        )
+       /* storeQueryParams.add(
+            "category == \"linux\""
+             //   "record.category == " + searchValue.category
+
+        )
+        storeQueryParams.add(
+            "difficulty == \"easy\""
+              //  "record.difficulty == " + searchValue.difficulty
+            )*/
+
+        for(i in 1..storeQueryParams.size){
+            queryArgs.append(storeQueryParams.remove())
+            if(storeQueryParams.isNotEmpty()) {
+                queryArgs.append(" AND ")
+            }
+        }
+
+      /*  for( i in storeQueryParams){
+            queryArgs.append(storeQueryParams.remove())
+
+            if(storeQueryParams.size > 1) queryArgs.append(" ADD ")
+        }
+*/
+        if(queryString != ""){
+            queryString += " WHERE " + queryArgs
+        }
+
+        return SimpleSQLiteQuery(queryString)
+        }
+
+    fun testTrue(testValue: String): Boolean {
+        if (testValue != "") {
+            return true
+        }
+        return false
+    }
+    /* suspend fun createRecord(
+         userId: Int,
+         category: String,
+         difficulty: String,
+         questionAmount: Int
+     ): Long {
+         val tempRecord = Record(
+             0, userId, category, difficulty, questionAmount,
+             0, 0, 0
+         )
+         return insertRecord(tempRecord)
+     }*/
 
 
-    suspend fun loadApiParam(record_ID: Int): HashMap<String, String> {
-        val tempRecord = getRecord(record_ID)
+    fun loadApiParam(): HashMap<String, String> {
+        val temp = "sudo "
         return hashMapOf<String, String>(
-            "category" to tempRecord.category,
-            "difficulty" to tempRecord.difficulty,
-            "limit" to tempRecord.questionAmount.toString(),
+            "category" to userPrefData.category!!,
+            "difficulty" to userPrefData.difficulty!!,
+            "limit" to userPrefData.question_amount.toString(),
             "apiKey" to "hcUZqLCh8uTaXt121DQd5IQ7wv5GFIVA5YlaPxy4"
         )
     }
-
 
 }

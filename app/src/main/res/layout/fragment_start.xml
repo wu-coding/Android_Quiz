@@ -4,7 +4,9 @@
     tools:context=".ui.views.StartFragment">
 
     <data>
-
+        <variable
+            name="recordpref"
+            type="com.example.clean_quiz.data.models.RecordPreferences" />
         <variable
             name="viewModel"
             type="com.example.clean_quiz.ui.viewmodel.StartViewModel" />
@@ -55,7 +57,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
                         android:gravity="center"
-                        android:text="@{viewModel.fname}"
+                        android:text="@={viewModel.currentUser.firstName}"
                         android:textSize="12sp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -74,7 +76,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:gravity="center_horizontal"
-                    android:text="@{viewModel.lname}"
+                    android:text="@={viewModel.currentUser.lastName}"
                     android:textSize="12sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -105,7 +107,6 @@
                     android:gravity="center"
                     android:hint="Category"
                     android:inputType="none"
-                    android:text="@{viewModel.category}"
                     android:textSize="12sp" />
 
                 <LinearLayout
@@ -128,7 +129,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
-                        android:checkedButton="@{viewModel.difficulty}"
                         android:gravity="center"
                         android:orientation="horizontal">
 
@@ -185,16 +185,16 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight=".30"
-                    android:hint="1-20">
+                    android:layout_weight=".30">
 
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:inputType="numberSigned"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="1-20"
+                        android:inputType="number"
                         android:tag="numberSigned"
-                        android:text="@{viewModel.questionAmount}" />
+                        android:text="@{Integer.toString(viewModel.currentPreferences.question_amount)}" />
 
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
@@ -218,6 +218,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="clear" />
+
+                <Button
+                    android:id="@+id/skip_results"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Skip" />
             </LinearLayout>
 
         </LinearLayout>

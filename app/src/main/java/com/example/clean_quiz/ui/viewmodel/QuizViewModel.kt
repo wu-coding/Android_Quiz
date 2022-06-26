@@ -1,6 +1,7 @@
 package com.example.clean_quiz.ui.viewmodel
 
 import android.content.Context
+import android.os.SystemClock
 import android.widget.Chronometer
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.MutableLiveData
@@ -56,8 +57,8 @@ class QuizViewModel @Inject constructor(
 
     var correctSet = setOf<Int>()
 
-    suspend fun loadApiData(rowID: Long) {
-        val apiParams = quizDataRepository.loadApiParam(rowID.toInt())
+    suspend fun loadApiData() {
+        val apiParams = quizDataRepository.loadApiParam()
         apiData = apidatarepositoryImpl.getApiData(apiParams).toMutableList()
         questionAmount.postValue(apiData.size)
     }
@@ -150,7 +151,7 @@ class QuizViewModel @Inject constructor(
 
     fun writeToDatabase(){
      val scoreParam = RecordScore(0,currentScore.correct,currentScore.wrong,currentScore.timeTaken)
-    quizDataRepository.updateRecordScore()
+     quizDataRepository.updateRecordScore(scoreParam)
     }
 }
 
@@ -159,10 +160,10 @@ class QuizViewModel @Inject constructor(
     class Score(var correct: Int = 0,
                 var wrong: Int = 0,
                 var totalScore: Int = 0,
-                var timeTaken:Int =0) {
+                var timeTaken:String = "") {
 
     fun updateTime(timeParam:String){
-        timeTaken = timeParam.toInt()
+        timeTaken = timeParam
     }
 
     fun updateScore(score:Boolean){

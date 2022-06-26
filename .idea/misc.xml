@@ -8,14 +8,20 @@
         <entry key="..\:/Users/atfwu_laptop/AndroidStudioProjects/Clean_Quiz/app/src/main/res/drawable/wrong_answer.xml" value="0.218" />
         <entry key="..\:/Users/atfwu_laptop/AndroidStudioProjects/Clean_Quiz/app/src/main/res/layout/activity_main.xml" value="0.4" />
         <entry key="..\:/Users/atfwu_laptop/AndroidStudioProjects/Clean_Quiz/app/src/main/res/layout/fragment_login.xml" value="0.213768115942029" />
-        <entry key="..\:/Users/atfwu_laptop/AndroidStudioProjects/Clean_Quiz/app/src/main/res/layout/fragment_score.xml" value="0.2513586956521739" />
-        <entry key="..\:/Users/atfwu_laptop/AndroidStudioProjects/Clean_Quiz/app/src/main/res/layout/fragment_start.xml" value="0.4" />
+        <entry key="..\:/Users/atfwu_laptop/AndroidStudioProjects/Clean_Quiz/app/src/main/res/layout/fragment_results.xml" value="0.21920289855072464" />
+        <entry key="..\:/Users/atfwu_laptop/AndroidStudioProjects/Clean_Quiz/app/src/main/res/layout/fragment_score.xml" value="0.391008174386921" />
+        <entry key="..\:/Users/atfwu_laptop/AndroidStudioProjects/Clean_Quiz/app/src/main/res/layout/fragment_search_score.xml" value="0.4" />
+        <entry key="..\:/Users/atfwu_laptop/AndroidStudioProjects/Clean_Quiz/app/src/main/res/layout/fragment_search_score_host.xml" value="0.109375" />
+        <entry key="..\:/Users/atfwu_laptop/AndroidStudioProjects/Clean_Quiz/app/src/main/res/layout/fragment_search_score_results.xml" value="0.21920289855072464" />
+        <entry key="..\:/Users/atfwu_laptop/AndroidStudioProjects/Clean_Quiz/app/src/main/res/layout/fragment_start.xml" value="0.2734375" />
         <entry key="..\:/Users/atfwu_laptop/AndroidStudioProjects/Clean_Quiz/app/src/main/res/layout/fragment_start2.xml" value="0.13125" />
         <entry key="..\:/Users/atfwu_laptop/AndroidStudioProjects/Clean_Quiz/app/src/main/res/layout/help_dialog_layout.xml" value="0.11302083333333333" />
         <entry key="..\:/Users/atfwu_laptop/AndroidStudioProjects/Clean_Quiz/app/src/main/res/layout/list_item.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/atfwu_laptop/AndroidStudioProjects/Clean_Quiz/app/src/main/res/layout/name.xml" value="0.49948822927328557" />
         <entry key="..\:/Users/atfwu_laptop/AndroidStudioProjects/Clean_Quiz/app/src/main/res/layout/quiz_fragment.xml" value="0.2826747720364742" />
         <entry key="..\:/Users/atfwu_laptop/AndroidStudioProjects/Clean_Quiz/app/src/main/res/layout/quiz_fragment_item.xml" value="0.4" />
+        <entry key="..\:/Users/atfwu_laptop/AndroidStudioProjects/Clean_Quiz/app/src/main/res/layout/record_bar.xml" value="0.4" />
+        <entry key="..\:/Users/atfwu_laptop/AndroidStudioProjects/Clean_Quiz/app/src/main/res/layout/score_row.xml" value="0.6229086229086229" />
         <entry key="..\:/Users/atfwu_laptop/AndroidStudioProjects/Clean_Quiz/app/src/main/res/menu/toolbar_menu.xml" value="0.11302083333333333" />
       </map>
     </option>

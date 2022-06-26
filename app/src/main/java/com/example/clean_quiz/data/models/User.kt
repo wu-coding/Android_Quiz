@@ -31,6 +31,4 @@ data class User(
     @ColumnInfo(name = "last_name") var lastName:String
 )
 
-fun User.add(){
 
-}

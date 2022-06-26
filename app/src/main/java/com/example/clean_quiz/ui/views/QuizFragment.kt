@@ -29,7 +29,6 @@ class QuizFragment : Fragment() {
     //   private val startViewModel: StartViewModel by activityViewModels()
     private lateinit var binding: QuizFragmentBinding
     private val quizViewModel by viewModels<QuizViewModel>()
-    val args: QuizFragmentArgs by navArgs()
     private lateinit var quizAdapter: QuizViewAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,7 +59,7 @@ class QuizFragment : Fragment() {
 
 
         val loadApi = viewLifecycleOwner.lifecycleScope.async(Dispatchers.IO) {
-            quizViewModel.loadApiData(args.passUserParam)
+            quizViewModel.loadApiData()
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
@@ -81,7 +80,6 @@ class QuizFragment : Fragment() {
         }
 
 
-        //  binding.timeTaken.start()
         quizViewModel.progress.observe(viewLifecycleOwner, Observer {
             binding.submitAnswers.isEnabled = true
             binding.submitAnswers.visibility = View.VISIBLE
@@ -108,8 +106,11 @@ class QuizFragment : Fragment() {
                 nextPage()
             } else {
                 binding.timeTaken.stop()
-                quizViewModel.currentScore.updateTime(binding.timeTaken.text)
-                findNavController().navigate(QuizFragmentDirections.actionQuizFragmentToScoreFragment())
+                quizViewModel.currentScore.updateTime(binding.timeTaken.text.toString())
+                viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
+                    quizViewModel.writeToDatabase()
+                }
+                findNavController().navigate(R.id.next_page_results)
             }
         }
     }

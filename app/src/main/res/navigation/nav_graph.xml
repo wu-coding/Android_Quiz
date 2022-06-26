@@ -11,9 +11,15 @@
         android:label="fragment_start"
         tools:layout="@layout/fragment_start" >
         <action
-            android:id="@+id/next_quiz"
+            android:id="@+id/next_page_quiz"
             app:destination="@id/quizFragment"
             app:popUpTo="@id/quizFragment">
+        </action>
+
+        <action
+            android:id="@+id/skip_results"
+            app:destination="@id/resultsFragment"
+            app:popUpTo="@id/resultsFragment">
         </action>
        </fragment>
     <fragment
@@ -22,18 +28,27 @@
         android:label="quiz_fragment"
         tools:layout="@layout/quiz_fragment" >
         <action
-            android:id="@+id/action_quizFragment_to_scoreFragment"
-            app:destination="@id/scoreFragment" />
-        <argument
-            android:name="passUserParam"
-            app:argType="long"
-         />
+            android:id="@+id/next_page_results"
+            app:destination="@id/resultsFragment"
+            app:popUpTo="@id/resultsFragment" />
     </fragment>
     <fragment
-        android:id="@+id/scoreFragment"
-        android:name="com.example.clean_quiz.ui.views.ScoreFragment"
-        android:label="fragment_score"
-        tools:layout="@layout/fragment_score" />
+        android:id="@+id/resultsFragment"
+        android:name="com.example.clean_quiz.ui.views.ResultsFragment"
+        android:label="fragment_results"
+        tools:layout="@layout/fragment_results" />
+    <fragment
+        android:id="@+id/searchScoreResults"
+        android:name="com.example.clean_quiz.ui.views.Results.SearchScoreResults"
+        android:label="SearchScoreResults" />
+    <fragment
+        android:id="@+id/hilt_SearchScoreFragment"
+        android:name="com.example.clean_quiz.ui.views.Results.Hilt_SearchScoreFragment"
+        android:label="Hilt_SearchScoreFragment" >
+        <action
+            android:id="@+id/action_hilt_SearchScoreFragment_to_searchScoreResults"
+            app:destination="@id/searchScoreResults" />
+    </fragment>
 
 
 </navigation>

@@ -81,7 +81,7 @@ class QuizViewAdapter(
         }
 
         fun updateCardImage(cardUiState:CardUiState) {
-            when (cardUiState.answerStatus) {
+            when (cardUiState.answerStatus!!) {
                 AnswerCheckStatus.CORRECT -> cardCheck.setImageResource(R.drawable.correct_answer)
                 AnswerCheckStatus.WRONG -> cardCheck.setImageResource(R.drawable.wrong_answer)
                 AnswerCheckStatus.NOTSELECTED -> cardCheck.setImageResource(R.drawable.not_selected)
@@ -98,7 +98,7 @@ class QuizViewAdapter(
 
 
         fun updateCardBG(cardUiState:CardUiState) {
-            when (cardUiState.answerStatus) {
+            when (cardUiState.answerStatus!!) {
                 AnswerCheckStatus.CORRECT -> cardAnswer.setBackgroundResource(R.color.green)
                 AnswerCheckStatus.WRONG -> cardAnswer.setBackgroundResource(R.color.red)
                 AnswerCheckStatus.NOTSELECTED -> cardAnswer.setBackgroundResource(R.color.yellow)
