@@ -18,12 +18,11 @@
         <com.google.android.material.progressindicator.LinearProgressIndicator
             android:id="@+id/linearProgressIndicator"
             android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:layout_marginBottom="20dp"
+            android:layout_height="15dp"
             android:progress="@{viewModel.progress}"
-            app:layout_constraintBottom_toTopOf="@+id/guideline2"
             app:layout_constraintTop_toTopOf="parent"
-            app:trackCornerRadius="10dp"
+            app:indicatorColor="@color/green"
+            app:trackThickness="15dp"
             tools:layout_editor_absoluteX="0dp" />
 
         <androidx.constraintlayout.widget.Guideline
@@ -38,7 +37,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="37dp"
-            android:text="Questions Left"
+            android:text="Questions Left:"
+            android:textSize="25dp"
             app:layout_constraintEnd_toStartOf="@+id/question_left_display"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_chainStyle="spread"
@@ -49,6 +49,7 @@
             android:id="@+id/question_left_display"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="25dp"
             android:text="@={`` + viewModel.questionAmount}"
             app:layout_constraintBottom_toBottomOf="@+id/question_left_text"
             app:layout_constraintEnd_toStartOf="@+id/score_text"
@@ -59,7 +60,8 @@
             android:id="@+id/score_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Score"
+            android:textSize="25dp"
+            android:text="Score:"
             app:layout_constraintBottom_toBottomOf="@+id/question_left_display"
             app:layout_constraintEnd_toStartOf="@+id/score_display"
             app:layout_constraintHorizontal_bias="0.5"
@@ -70,6 +72,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@={`` + viewModel.showScore}"
+            android:textSize="25dp"
             app:layout_constraintBottom_toBottomOf="@+id/score_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -79,21 +82,20 @@
         <TextView
             android:id="@+id/questionText"
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_marginBottom="43dp"
+            android:layout_height="wrap_content"
             android:text="@={viewModel.currentQuestion}"
-            app:layout_constraintBottom_toTopOf="@+id/quiz_recyclerView"
+            android:layout_margin="20dp"
+            android:textSize="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/question_left_text" />
+            app:layout_constraintTop_toBottomOf="@+id/score_text" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/quiz_recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="148dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            app:layout_constraintBottom_toTopOf="@+id/submit_answers"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/questionText"
             tools:listitem="@layout/quiz_fragment_item">
@@ -104,6 +106,7 @@
             android:id="@+id/submit_answers"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:enabled="false"
             android:text="Submit"
             app:layout_constraintBottom_toBottomOf="@+id/next_question"
             app:layout_constraintEnd_toStartOf="@+id/next_question"
@@ -140,6 +143,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/guideline4" />
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/loading_circle"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:indeterminate="true"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

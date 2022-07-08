@@ -1,8 +1,11 @@
 <resources>
     <string-array name="category_array">
         <item>Linux</item>
+        <item>BASH</item>
+        <item>PHP</item>
+        <item>HTML</item>
         <item>DevOps</item>
-        <item>Networking</item>
+        <item>Docker</item>
     </string-array>
 
     <string-array name="difficulty_array">

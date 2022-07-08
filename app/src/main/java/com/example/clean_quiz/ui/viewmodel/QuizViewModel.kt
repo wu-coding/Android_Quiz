@@ -3,6 +3,7 @@ package com.example.clean_quiz.ui.viewmodel
 import android.content.Context
 import android.os.SystemClock
 import android.widget.Chronometer
+import android.widget.Toast
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -59,7 +60,7 @@ class QuizViewModel @Inject constructor(
 
     suspend fun loadApiData() {
         val apiParams = quizDataRepository.loadApiParam()
-        apiData = apidatarepositoryImpl.getApiData(apiParams).toMutableList()
+            apiData = apidatarepositoryImpl.getApiData(apiParams).toMutableList()
         questionAmount.postValue(apiData.size)
     }
 

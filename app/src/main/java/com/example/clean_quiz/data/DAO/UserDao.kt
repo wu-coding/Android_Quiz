@@ -12,5 +12,5 @@ interface UserDao {
     fun findUser(fname:String, lname:String):User?
 
     @Insert(onConflict = OnConflictStrategy.ABORT)
-    fun insertUser(user: User)
+    fun insertUser(user: User):Long
 }

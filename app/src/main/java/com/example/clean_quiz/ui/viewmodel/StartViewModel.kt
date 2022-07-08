@@ -14,14 +14,14 @@ import javax.inject.Inject
 class StartViewModel @Inject constructor(private val quizDataRepository: QuizDataRepository) :
     ViewModel() {
 
-    var currentUser = User(1, "Sam", "Two")
-    var currentPreferences = RecordPreferences(0, 1, "Linux", "easy", 2)
+    var currentUser = User(0, "", "")
+    var currentPreferences =  RecordPreferences(0, 0, null, null, 0)
     // var currentPreferences = RecordPreferences(0,0,"","",0)
 
 
     var errorOutput = ""
 
-    fun validateResponse() {
+/*    fun validateResponse() {
         errorOutput = ""
         var errorMessage = ""
 
@@ -34,7 +34,7 @@ class StartViewModel @Inject constructor(private val quizDataRepository: QuizDat
         if (errorMessage.length > 0) {
             errorOutput = "Please fill out the empty section:" + errorMessage
         }
-    }
+    }*/
 
 
     suspend fun clearDatabase() {
@@ -43,8 +43,8 @@ class StartViewModel @Inject constructor(private val quizDataRepository: QuizDat
 
     //somehow has problems when starting from empty db? User problems?
     suspend fun writeToDatabase() {
-        quizDataRepository.getUser(currentUser.firstName, currentUser.lastName)
-        quizDataRepository.updateRecordPreferences(currentPreferences)
+     //   quizDataRepository.getUser(currentUser.firstName, currentUser.lastName)
+        quizDataRepository.updatePreferences(currentUser,currentPreferences)
     }
 
 }

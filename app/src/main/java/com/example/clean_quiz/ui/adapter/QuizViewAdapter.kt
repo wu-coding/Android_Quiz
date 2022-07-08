@@ -53,7 +53,8 @@ class QuizViewAdapter(
 
             if (!cardUiState.answerSelected) {
                 cardUiState.answerSelected = true
-                holder.cardAnswer.setBackgroundResource(R.color.light_blue_600)
+                // set back to light blue?
+                holder.cardAnswer.setBackgroundColor(Color.BLUE)
             } else {
                 holder.cardAnswer.setBackgroundColor(Color.WHITE)
             }
@@ -99,9 +100,13 @@ class QuizViewAdapter(
 
         fun updateCardBG(cardUiState:CardUiState) {
             when (cardUiState.answerStatus!!) {
-                AnswerCheckStatus.CORRECT -> cardAnswer.setBackgroundResource(R.color.green)
+                AnswerCheckStatus.CORRECT -> cardAnswer.setBackgroundColor(Color.GREEN)
+                AnswerCheckStatus.WRONG -> cardAnswer.setBackgroundColor(Color.RED)
+                AnswerCheckStatus.NOTSELECTED -> cardAnswer.setBackgroundColor(Color.YELLOW)
+
+              /*  AnswerCheckStatus.CORRECT -> cardAnswer.setBackgroundResource(R.color.green)
                 AnswerCheckStatus.WRONG -> cardAnswer.setBackgroundResource(R.color.red)
-                AnswerCheckStatus.NOTSELECTED -> cardAnswer.setBackgroundResource(R.color.yellow)
+                AnswerCheckStatus.NOTSELECTED -> cardAnswer.setBackgroundResource(R.color.yellow)*/
             }
         }
 

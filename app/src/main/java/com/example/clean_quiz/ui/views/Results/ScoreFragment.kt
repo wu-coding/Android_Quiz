@@ -52,17 +52,16 @@ class ScoreFragment : Fragment() {
                     false
                 )
             }
-// not acivating 1
+
             resultsViewModel.tabNumber.observe(viewLifecycleOwner, Observer { tabNum ->
                 when (tabNum) {
-                    0 -> adapter.loadNewData(resultsViewModel.top10RecordList, null, null)
+                    0 -> adapter.loadNewData(resultsViewModel.top10RecordList, resultsViewModel.getUserId(),
+                        resultsViewModel.getRecordId())
                     1 -> {
+                        val temp1 = adapter.recordList
                         adapter.loadNewData(
-                            resultsViewModel.userRecordList,
-                            resultsViewModel.getUserId(),
-                            resultsViewModel.getRecordId()
+                            resultsViewModel.userRecordList,null,null
                         )
-                   //     binding.scoreList.scrollToPosition(resultsViewModel.getRecordId())
                     }
                 }
             })

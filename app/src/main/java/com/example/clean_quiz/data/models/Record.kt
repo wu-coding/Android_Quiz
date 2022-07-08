@@ -46,9 +46,9 @@ data class FullRecord(
 data class RecordPreferences(
     val record_id: Int,
     var user_id:Int,
-    var category: String,
-    var difficulty: String,
-    var question_amount: Int
+    var category: String?,
+    var difficulty: String?,
+    var question_amount: Int?
 )
 
 data class RecordScore(

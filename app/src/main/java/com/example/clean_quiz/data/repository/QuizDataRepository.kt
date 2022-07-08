@@ -33,19 +33,31 @@ class QuizDataRepository @Inject constructor(
         }
     }
 
-    fun getUserRecords(firstName:String, lastName:String) = recordDao.getUserRecords(firstName, lastName)
+    fun getUserRecords(firstName: String, lastName: String) =
+        recordDao.getUserRecords(firstName, lastName)
+
     fun insertUser(user: User) = userDao.insertUser(user)
     fun updateRecordScore(recordScore: RecordScore) = recordDao.updateRecordScore(recordScore)
     fun getTop10() = recordDao.getTop10()
     fun getCategoryRecords(categoryID: String) = recordDao.getCategoryRecords(categoryID)
 
 
-    //Get rid of Long?
-    fun updateRecordPreferences(recordPreferences: RecordPreferences): Long {
+    //Something wrong on first user register maybe timing?
+    fun updatePreferences(userParam: User, recordPreferences: RecordPreferences) {
+        //   getUser(userValue.firstName, userValue.lastName)
+        // function to check for existing user and get id
+        var userId = 0
+        val userValue = userDao.findUser(userParam.firstName, userParam.lastName)
+        if (userValue != null) {
+            userData = userValue!!
+        }else{
+            userId = insertUser(userParam).toInt()
+            userData = User(userId, userParam.firstName,userParam.lastName)
+        }
+
         userPrefData = recordPreferences
         userPrefData.user_id = userData.userId
-      //  val temp = userPrefData.isInitialized
-        return recordDao.updateRecordPreferences(userPrefData)
+        recordDao.updateRecordPreferences(userPrefData)
     }
 
 
@@ -54,56 +66,73 @@ class QuizDataRepository @Inject constructor(
     }
 
 
-    fun searchRecordsQuery(searchValue: SearchPreferences) = recordDao.searchRecordsQuery(searchRecordsParam(searchValue))
+    fun searchRecordsQuery(searchValue: SearchPreferences) =
+        recordDao.searchRecordsQuery(searchRecordsParam(searchValue))
 
     // Should maybe make class nullable instead?
-    fun searchRecordsParam(searchValue: SearchPreferences):SimpleSQLiteQuery {
+    fun searchRecordsParam(searchValue: SearchPreferences): SimpleSQLiteQuery {
 
         var queryString =
             "Select * From record" + " INNER JOIN user ON record.user_id = user.user_id "
 
         var queryArgs = StringBuilder()
 
-        var storeQueryParams:Queue<String> = LinkedList<String>()
+        var storeQueryParams = LinkedList<String?>()
 
 
         storeQueryParams.add(
-                "first_name == ".addQuotes(searchValue.first_name)
+            addQueryParam("first_name", searchValue.first_name)
+            //   "first_name == ".addQuotes(searchValue.first_name)
 
         )
         storeQueryParams.add(
-                "last_name == ".addQuotes(searchValue.last_name)
-
-        )
-       /* storeQueryParams.add(
-            "category == \"linux\""
-             //   "record.category == " + searchValue.category
-
+            addQueryParam("last_name", searchValue.last_name)
+            //      "last_name == ".addQuotes(searchValue.last_name)
         )
         storeQueryParams.add(
-            "difficulty == \"easy\""
-              //  "record.difficulty == " + searchValue.difficulty
-            )*/
+            addQueryParam("record.category", searchValue.category)
+            //   "record.category == " + searchValue.category
+        )
+        storeQueryParams.add(
+            addQueryParam("record.difficulty", searchValue.difficulty)
+            //  "record.difficulty == " + searchValue.difficulty
+        )
 
-        for(i in 1..storeQueryParams.size){
-            queryArgs.append(storeQueryParams.remove())
-            if(storeQueryParams.isNotEmpty()) {
-                queryArgs.append(" AND ")
+        // if queryArgs.isnotEmpty()
+        /*    storeQueryParams?.forEach {
+                 var queryValue = ""
+                 if (queryArgs.isNotEmpty()) {
+                     queryValue = " AND " + it
+                 } else {
+                     queryValue = it!!
+                 }
+                 queryArgs.append(queryValue)
+             }*/
+
+        for (i in storeQueryParams) {
+            var queryValue = ""
+            if (i != null) {
+                if (queryArgs.isNotEmpty()) {
+                    queryValue = " AND " + i
+                } else {
+                    queryValue = i
+                }
+                queryArgs.append(queryValue)
             }
         }
 
-      /*  for( i in storeQueryParams){
-            queryArgs.append(storeQueryParams.remove())
+        /*  for( i in storeQueryParams){
+              queryArgs.append(storeQueryParams.remove())
 
-            if(storeQueryParams.size > 1) queryArgs.append(" ADD ")
-        }
-*/
-        if(queryString != ""){
+              if(storeQueryParams.size > 1) queryArgs.append(" ADD ")
+          }
+  */
+        if (queryString != "") {
             queryString += " WHERE " + queryArgs
         }
 
         return SimpleSQLiteQuery(queryString)
-        }
+    }
 
     fun testTrue(testValue: String): Boolean {
         if (testValue != "") {
@@ -126,9 +155,8 @@ class QuizDataRepository @Inject constructor(
 
 
     fun loadApiParam(): HashMap<String, String> {
-        val temp = "sudo "
         return hashMapOf<String, String>(
-            "category" to userPrefData.category!!,
+            "tags" to userPrefData.category!!,
             "difficulty" to userPrefData.difficulty!!,
             "limit" to userPrefData.question_amount.toString(),
             "apiKey" to "hcUZqLCh8uTaXt121DQd5IQ7wv5GFIVA5YlaPxy4"

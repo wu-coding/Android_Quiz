@@ -25,9 +25,9 @@ import kotlinx.coroutines.*
 @AndroidEntryPoint
 class StartFragment : Fragment() {
     // TODO: Rename and change types of parameters
-   // val startViewModel: StartViewModel by activityViewModels()
+    // val startViewModel: StartViewModel by activityViewModels()
 
-    private val startViewModel:StartViewModel by viewModels()
+    private val startViewModel: StartViewModel by viewModels()
     lateinit var binding: FragmentStartBinding
 
     override fun onCreateView(
@@ -43,45 +43,63 @@ class StartFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val items =  resources.getStringArray(R.array.category_array)
+        val items = resources.getStringArray(R.array.category_array)
         val arrayAdapter = ArrayAdapter(requireContext(), R.layout.list_item, items)
         binding.autoCompleteTextView.setAdapter(arrayAdapter)
 
-        binding.difficultyRadiogroup.setOnCheckedChangeListener(){
-            group, checkedID -> val RadioId = group.findViewById<RadioButton>(checkedID)
+        binding.difficultyRadiogroup.setOnCheckedChangeListener() { group, checkedID ->
+            val RadioId = group.findViewById<RadioButton>(checkedID)
             startViewModel.currentPreferences.difficulty = RadioId.text.toString()
         }
 
 
         // should use setError() https://stackoverflow.com/questions/64141542/data-binding-and-input-field-validation-and-manipulation-activity-fragment-nav
         binding.startButton.setOnClickListener() {
-            startViewModel.validateResponse()
-        if (startViewModel.errorOutput.length > 0){
-            Toast.makeText(requireContext(), startViewModel.errorOutput, Toast.LENGTH_SHORT).show()
-        }else{
-            viewLifecycleOwner.lifecycleScope.launch(){
-                var input: Long = 0
-                val writeDB = async (Dispatchers.IO) {
-                        startViewModel.writeToDatabase()
-                    }
-                writeDB.await()
-          //      view.findViewById<Action>(R.id.action.)
-                 findNavController().navigate(R.id.next_page_quiz)
+            val temp = binding.firstName.editText?.text.toString()
+            var errorFlag = false
+            if (binding.firstName.editText?.text.toString() == "") {
+                binding.firstName.error = "Enter First Name"
+                errorFlag = true
             }
+            if (binding.lastName.editText?.text.toString() == "") {
+                binding.lastName.error = "Enter Last Name"
+                errorFlag = true
+            }
+            if (binding.categorySpinner.editText?.text.toString() == "") {
+                binding.categorySpinner.error = "Enter Category"
+                errorFlag = true
+            }
+            if (binding.difficultyRadiogroup.checkedRadioButtonId == -1) {
+                binding.Difficulty.error = "Enter Difficulty"
+                errorFlag = true
+            }
+            if (binding.limitText.editText?.text == null) {
+                binding.limitText.error = "Enter Question #"
+                errorFlag = true
+            }
+            if (!errorFlag) {
+            viewLifecycleOwner.lifecycleScope.launch() {
+                var input: Long = 0
+                val writeDB = async(Dispatchers.IO) {
+                    startViewModel.writeToDatabase()
+                }
+                writeDB.await()
+                findNavController().navigate(R.id.next_page_quiz)
             }
         }
+        }
 
-        binding.clearDatabase.setOnClickListener{
+        binding.clearDatabase.setOnClickListener {
             viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
                 startViewModel.clearDatabase()
             }
         }
-        binding.skipResults.setOnClickListener{
+        binding.skipResults.setOnClickListener {
             findNavController().navigate(R.id.skip_results)
         }
 
 
-        }
+    }
 
 }
 

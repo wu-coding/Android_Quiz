@@ -10,7 +10,7 @@ import com.example.clean_quiz.databinding.ScoreRowBinding
 
 
 class ScoreViewAdapter(
-    private var recordList: Array<FullRecord>,
+    var recordList: Array<FullRecord>,
 ) : RecyclerView.Adapter<ScoreViewAdapter.ViewHolder>() {
     var userScorePosition:Int? = null
     var userIDValue: Int? = null
@@ -42,12 +42,11 @@ class ScoreViewAdapter(
             binding.questionAmountInput.text = recordValue.question_amount.toString()
             binding.scoreInput.text = recordValue.totalScore.toString()
 
-            if(recordValue.user_id == userIDValue){
+            if(recordValue.user_id != null && recordValue.user_id == userIDValue){
                 binding.root.setBackgroundColor(Color.GREEN)
             }
-            if(recordValue.record_id == recordIDValue){
+            if(recordValue.record_id != null && recordValue.record_id == recordIDValue){
                 binding.root.setBackgroundColor(Color.BLUE)
-                userScorePosition = layoutPosition
             }
         }
     }

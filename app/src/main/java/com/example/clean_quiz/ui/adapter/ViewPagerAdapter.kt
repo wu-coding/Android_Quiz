@@ -16,6 +16,7 @@ import com.example.clean_quiz.databinding.FragmentScoreBinding
 import com.example.clean_quiz.ui.views.Results.ScoreFragment
 import com.example.clean_quiz.ui.views.Results.SearchScoreFragment
 import com.example.clean_quiz.ui.views.Results.SearchScoreHostFragment
+import com.example.clean_quiz.ui.views.Results.SearchScoreResults
 
 
 private const val NUM_PAGES = 3
@@ -28,21 +29,17 @@ class ViewPagerAdapter(val fragment: FragmentManager, lifeCycle: Lifecycle) :
         return NUM_PAGES
     }
 
-    // make sure registers page 1 and 2 page as same fragment
     override fun getItemId(position: Int): Long {
-        var id = position
-        if (position == 1){
-            id = 0
-        }
-        return super.getItemId(id)
+        return super.getItemId(position)
     }
 
-
     override fun createFragment(position: Int): Fragment {
-        if (position == 0 || position == 1) {
+        if (position == 0) {
+            return ScoreFragment()
+        }else if(position == 1){
             return ScoreFragment()
         }
-        return SearchScoreHostFragment()
+        return SearchScoreResults()
     }
 }
 

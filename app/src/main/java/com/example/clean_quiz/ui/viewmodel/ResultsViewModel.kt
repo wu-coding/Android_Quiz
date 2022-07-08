@@ -18,7 +18,7 @@ class ResultsViewModel @Inject constructor(
 ) : ViewModel() {
     // ResultsFragments
     val tabNumber = MutableLiveData<Int>()
-    val temp = "Test"
+
 
     // Score Fragment
     lateinit var top10RecordList: Array<FullRecord>
@@ -26,31 +26,22 @@ class ResultsViewModel @Inject constructor(
     lateinit var totalRecordList: Array<FullRecord>
 
     // Search Fragment
-    lateinit var searchResultsList: Array<FullRecord>
-    lateinit var searchInput: SearchPreferences
-
-    //Test Data
-    fun loadUser() {
-        quizDataRepository.userData = User(0, "Sam", "Two")
-        quizDataRepository.userPrefData = RecordPreferences(0, 0, "Linux", "easy", 2)
-    }
-
+    var searchResultsList = MutableLiveData<Array<FullRecord>>()
+    var searchInput = SearchPreferences(null,null,null,null)
 
     fun loadScoreData() {
-        loadUser()
         top10RecordList = quizDataRepository.getTop10()
         userRecordList = quizDataRepository.getUserRecords(
             quizDataRepository.userData.firstName,
             quizDataRepository.userData.lastName
         )
         totalRecordList =
-            quizDataRepository.getCategoryRecords(quizDataRepository.userPrefData.category)
+            quizDataRepository.getCategoryRecords(quizDataRepository?.userPrefData?.category!!)
     }
 
     fun loadSearchData() {
-        searchInput = SearchPreferences("Sam", "Two", "","")
-        searchResultsList = quizDataRepository.searchRecordsQuery(searchInput)
-        val temp = "sudo"
+        searchResultsList.postValue(quizDataRepository.searchRecordsQuery(searchInput))
+
     }
 
 
@@ -61,4 +52,5 @@ class ResultsViewModel @Inject constructor(
     fun getRecordId():Int{
         return quizDataRepository.userPrefData.record_id
     }
+
 }

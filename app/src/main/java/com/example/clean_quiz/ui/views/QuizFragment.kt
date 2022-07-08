@@ -64,6 +64,8 @@ class QuizFragment : Fragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             loadApi.await()
+            binding.loadingCircle.visibility = View.INVISIBLE
+            binding.submitAnswers.isEnabled = true
             quizAdapter = QuizViewAdapter(quizViewModel.storeUserInput)
 
             binding.quizRecyclerView.apply {

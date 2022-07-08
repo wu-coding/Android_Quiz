@@ -10,6 +10,9 @@
         android:id="@+id/item_card"
         android:layout_width="match_parent"
         android:layout_height="40dp"
+        android:layout_margin="5dp"
+        app:strokeColor="@color/grey"
+        app:strokeWidth="2dp"
         android:checkable="true"
         android:clickable="true"
         android:focusable="true">
@@ -24,7 +27,9 @@
             <TextView
                 android:id="@+id/item_answer"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:padding="5dp"
                 android:layout_weight=".80" />
 
             <ImageView

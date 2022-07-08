@@ -28,8 +28,15 @@ fun String.addQuotes(string: String?):String{
     return this.plus("\"" + string + "\"")
 }
 
-fun Queue<String>.addQueryParam(queryString:String, queryParam:String?){
+/*fun Queue<String>.addQueryParam(queryString:String, queryParam:String?){
     if (queryParam != ""){
         this.add(queryString)
     }
+}*/
+
+fun addQueryParam(paramName:String, paramValue:String?):String?{
+    if (paramValue == null){
+        return null
+    }
+    return "$paramName == \"$paramValue\""
 }

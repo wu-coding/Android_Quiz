@@ -58,7 +58,6 @@ class ResultsFragment : Fragment() {
 
 
         TabLayoutMediator(binding.tabBar, binding.tabViewpager) { tab, position ->
-          //  resultsViewModel.tabNumber.value = position
             tab.text = tabNamesArray[position]
         }.attach()
 

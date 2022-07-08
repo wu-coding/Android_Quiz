@@ -14,7 +14,7 @@ interface RecordDao {
 
 
     @Insert(entity = Record::class)
-    fun updateRecordPreferences(recordPreferences: RecordPreferences): Long
+    fun updateRecordPreferences(recordPreferences: RecordPreferences)
 
     @Update(entity = Record::class)
     fun updateRecordScore(recordScore: RecordScore)
