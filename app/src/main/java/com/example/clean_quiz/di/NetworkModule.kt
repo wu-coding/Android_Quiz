@@ -2,20 +2,17 @@ package com.example.clean_quiz.di
 
 import android.content.Context
 import androidx.room.Room
-import androidx.room.RoomDatabase
-import com.example.clean_quiz.data.ApiDataJsonAdapter
-import com.example.clean_quiz.data.DAO.RecordDao
-import com.example.clean_quiz.data.DAO.UserDao
-import com.example.clean_quiz.data.models.Database
-import com.example.clean_quiz.data.api.RetrofitService
-import com.example.clean_quiz.data.repository.QuizDataRepository
+import com.example.clean_quiz.adapter.ApiDataJsonAdapter
+import com.example.clean_quiz.DAO.RecordDao
+import com.example.clean_quiz.DAO.UserDao
+import com.example.clean_quiz.api.RetrofitService
+import com.example.clean_quiz.models.Database
+import com.example.clean_quiz.repository.QuizDataRepository
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import io.github.toranoko0518.moshi.adapter.PairAdapterFactory

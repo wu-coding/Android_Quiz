@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.views.ResultsFragment">
+    tools:context=".views.ResultsFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <com.google.android.material.tabs.TabLayout
@@ -17,21 +17,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:tag="1"
-            android:text="Top 10" />
+            android:text="@string/top_10" />
 
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:tag="2"
-            android:text="User" />
+            android:text="@string/user" />
 
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:tag="3"
-            android:text="Search" />
+            android:text="@string/search" />
 
     </com.google.android.material.tabs.TabLayout>
 

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/startFragment"
-        android:name="com.example.clean_quiz.ui.views.StartFragment"
+        android:name="com.example.clean_quiz.views.StartFragment"
         android:label="fragment_start"
         tools:layout="@layout/fragment_start" >
         <action
@@ -18,32 +18,36 @@
 
         <action
             android:id="@+id/skip_results"
-            app:destination="@id/resultsFragment"
-            app:popUpTo="@id/resultsFragment">
+            app:destination="@id/resultsFragment">
         </action>
        </fragment>
     <fragment
         android:id="@+id/quizFragment"
-        android:name="com.example.clean_quiz.ui.views.QuizFragment"
+        android:name="com.example.clean_quiz.views.QuizFragment"
         android:label="quiz_fragment"
-        tools:layout="@layout/quiz_fragment" >
+        tools:layout="@layout/fragment_quiz" >
         <action
             android:id="@+id/next_page_results"
             app:destination="@id/resultsFragment"
             app:popUpTo="@id/resultsFragment" />
+        <action
+            android:id="@+id/back_to_start"
+            app:destination="@id/startFragment"
+            app:popUpTo="@id/quizFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/resultsFragment"
-        android:name="com.example.clean_quiz.ui.views.ResultsFragment"
+        android:name="com.example.clean_quiz.views.ResultsFragment"
         android:label="fragment_results"
         tools:layout="@layout/fragment_results" />
     <fragment
         android:id="@+id/searchScoreResults"
-        android:name="com.example.clean_quiz.ui.views.Results.SearchScoreResults"
+        android:name="com.example.clean_quiz.views.ResultFragmentUserScore"
         android:label="SearchScoreResults" />
     <fragment
         android:id="@+id/hilt_SearchScoreFragment"
-        android:name="com.example.clean_quiz.ui.views.Results.Hilt_SearchScoreFragment"
+        android:name="com.example.clean_quiz.views.Results.Hilt_SearchScoreFragment"
         android:label="Hilt_SearchScoreFragment" >
         <action
             android:id="@+id/action_hilt_SearchScoreFragment_to_searchScoreResults"

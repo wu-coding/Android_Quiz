@@ -6,7 +6,7 @@
         <item>HTML</item>
         <item>DevOps</item>
         <item>Docker</item>
-    </string-array>
+    </string-array>Ye
 
     <string-array name="difficulty_array">
         <item>easy</item>
@@ -14,9 +14,49 @@
         <item>hard</item>
     </string-array>
 
-
-    <string name="inputType"> "number" </string>
     <string name="app_name">Clean_Quiz</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- StartFragment-->
+    <string name="user_name">User Name</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="quiz_preferences">Quiz Preferences</string>
+    <string name="category">Category</string>
+    <string name="difficulty">Difficulty</string>
+    <string name="easy">easy</string>
+    <string name="medium">medium</string>
+    <string name="hard">hard</string>
+    <string name="question_amount">Question Amount</string>
+    <string name="_1_10">1-10</string>
+    <string name="start">Start</string>
+
+    <!--QuizFragment-->
+    <string name="inputType"> "number" </string>
+    <string name="score">Score:</string>
+    <string name="questions_left">Questions Left:</string>
+    <string name="next">Next</string>
+    <string name="submit">Submit</string>
+
+
+    <!--ResultFragment-->
+    <string name="top_10">Top 10</string>
+    <string name="user">User</string>
+    <string name="search">Search</string>
+
+    <!--ResultRecyclerBar-->
+    <string name="bar_name">Name</string>
+    <string name="bar_category">Category</string>
+    <string name="bar_difficulty">Difficulty</string>
+    <string name="bar_question">Question #</string>
+
+    <!--ResultSearchUser-->
+    <string name="search_again">Search Again</string>
+
+    <!--   Toolbar-->
+    <string name="about">About</string>
+    <string name="help_quiz">Quiz Help</string>
+    <string name="help_records">Records Help</string>
+
+
 </resources>
