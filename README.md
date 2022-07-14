@@ -1,15 +1,18 @@
-# Clean_Quiz
+Shifted Development to fetch branch 
+Need to update to latest version
 
-Quiz Logic Working
+##TODO
 
-Todo:
-UI
-Visible Score Data-Binding
-About Alert Dialog
-Fragment Navigation
-Question Timer
+ - [x] User selects Trivia Data 
+ - [x] Get Data from API 
+ - [ ] De serialize Data
+ - [x] RecyclerView Implementation 
+ - [ ] Score calculating 
+ - [ ] Sharing Data
 
 
-Problems
-After screen rotation livedata observer in fragment
-will auto fire
+##Additional Features
+ - Timer
+ - Room Implementation
+
+
