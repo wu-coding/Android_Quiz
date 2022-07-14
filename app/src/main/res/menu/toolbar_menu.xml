@@ -2,7 +2,17 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/helpOption"
-        android:title="Help"
+        android:id="@+id/aboutOption"
+        android:title="@string/about"
+        app:showAsAction="collapseActionView" />
+
+    <item
+        android:id="@+id/helpQuizOption"
+        android:title="@string/help_quiz"
+        app:showAsAction="collapseActionView" />
+
+    <item
+        android:id="@+id/helpRecordsOption"
+        android:title="@string/help_records"
         app:showAsAction="collapseActionView" />
 </menu>
