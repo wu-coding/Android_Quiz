@@ -7,10 +7,10 @@
     <data>
         <variable
             name="recordpref"
-            type="com.example.clean_quiz.models.RecordPreferences" />
+            type="com.example.android_quiz.models.RecordPreferences" />
         <variable
             name="viewModel"
-            type="com.example.clean_quiz.viewmodel.StartViewModel" />
+            type="com.example.android_quiz.viewmodel.StartViewModel" />
 
         <variable
             name="spinnerAdapter"

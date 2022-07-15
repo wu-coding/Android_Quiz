@@ -11,7 +11,7 @@ android {
     compileSdkVersion 31
 
     defaultConfig {
-        applicationId "com.example.clean_quiz"
+        applicationId "com.example.android_quiz"
         minSdkVersion 16
         targetSdkVersion 31
         versionCode 1

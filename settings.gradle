@@ -1,4 +1,4 @@
 include ':app'
-rootProject.name = "Clean_Quiz"
+rootProject.name = "Android_Quiz"
 
 

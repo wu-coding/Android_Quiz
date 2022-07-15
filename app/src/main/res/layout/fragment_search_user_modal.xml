@@ -3,10 +3,10 @@
 <data>
     <variable
         name="recordpref"
-        type="com.example.clean_quiz.models.SearchPreferences" />
+        type="com.example.android_quiz.models.SearchPreferences" />
     <variable
         name="viewModel"
-        type="com.example.clean_quiz.viewmodel.ResultsViewModel" />
+        type="com.example.android_quiz.viewmodel.ResultsViewModel" />
 
 </data>
 <androidx.coordinatorlayout.widget.CoordinatorLayout

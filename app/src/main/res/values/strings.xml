@@ -14,7 +14,7 @@
         <item>hard</item>
     </string-array>
 
-    <string name="app_name">Clean_Quiz</string>
+    <string name="app_name">Android_Quiz</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <!-- StartFragment-->

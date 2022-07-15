@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".views.QuizFragment">
     <data>
-        <variable name = "viewModel" type="com.example.clean_quiz.viewmodel.QuizViewModel"/>
+        <variable name = "viewModel" type="com.example.android_quiz.viewmodel.QuizViewModel"/>
         <import type="android.view.View"/>
 
     </data>
