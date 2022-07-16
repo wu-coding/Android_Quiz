@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.android_quiz.R
 import com.example.android_quiz.models.FullRecord
 import com.example.android_quiz.databinding.ScoreRowBinding
 
@@ -52,7 +53,7 @@ class ScoreViewAdapter(
                 binding.root.setBackgroundColor(Color.GREEN)
             }
             if(recordValue.record_id != null && recordValue.record_id == recordIDValue){
-                binding.root.setBackgroundColor(Color.BLUE)
+                binding.root.setBackgroundColor(R.color.light_blue_color)
             }
         }
     }

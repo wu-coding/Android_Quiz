@@ -45,7 +45,7 @@ class QuizViewAdapter(
 
             if (!cardUiState.answerSelected) {
                 cardUiState.answerSelected = true
-                holder.cardAnswer.setBackgroundColor(Color.BLUE)
+                holder.cardAnswer.setBackgroundColor(R.color.light_blue_color)
             } else {
                 cardUiState.answerSelected = false
                 holder.cardAnswer.setBackgroundColor(Color.WHITE)

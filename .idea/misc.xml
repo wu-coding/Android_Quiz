@@ -3,6 +3,18 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Android_Quiz/app/src/main/res/drawable/correct_answer.xml" value="0.1" />
+        <entry key="..\:/Android_Quiz/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
+        <entry key="..\:/Android_Quiz/app/src/main/res/layout/fragment_quiz.xml" value="0.2" />
+        <entry key="..\:/Android_Quiz/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />
+        <entry key="..\:/Android_Quiz/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1" />
+        <entry key="..\:/Users/atfwu_laptop/AndroidStudioProjects/Android_Quiz/app/src/main/res/drawable/correct_answer.xml" value="0.1" />
+        <entry key="..\:/Users/atfwu_laptop/AndroidStudioProjects/Android_Quiz/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
+        <entry key="..\:/Users/atfwu_laptop/AndroidStudioProjects/Android_Quiz/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.1" />
+        <entry key="..\:/Users/atfwu_laptop/AndroidStudioProjects/Android_Quiz/app/src/main/res/layout/fragment_quiz.xml" value="0.4" />
+        <entry key="..\:/Users/atfwu_laptop/AndroidStudioProjects/Android_Quiz/app/src/main/res/layout/fragment_search_score_results.xml" value="0.21920289855072464" />
+        <entry key="..\:/Users/atfwu_laptop/AndroidStudioProjects/Android_Quiz/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />
+        <entry key="..\:/Users/atfwu_laptop/AndroidStudioProjects/Android_Quiz/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1" />
         <entry key="..\:/Users/atfwu_laptop/AndroidStudioProjects/Clean_Quiz/app/src/main/res/drawable/circle.xml" value="0.1" />
         <entry key="..\:/Users/atfwu_laptop/AndroidStudioProjects/Clean_Quiz/app/src/main/res/drawable/correct_answer.xml" value="0.258" />
         <entry key="..\:/Users/atfwu_laptop/AndroidStudioProjects/Clean_Quiz/app/src/main/res/drawable/progress_drawable.xml" value="0.1" />

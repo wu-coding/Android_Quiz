@@ -38,7 +38,6 @@
             android:id="@+id/question_left_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="37dp"
             android:text="@string/questions_left"
             android:textSize="25dp"
             app:layout_constraintEnd_toStartOf="@+id/question_left_display"
@@ -95,8 +94,8 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/quiz_recyclerView"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_height="0dp"
+            app:layout_constraintHeight_percent=".40"
             android:layout_marginRight="10dp"
             android:scrollbars="vertical"
             app:layout_constraintBottom_toTopOf="@+id/submit_answers"
@@ -110,7 +109,8 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/submit_answers"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            app:layout_constraintHeight_percent=".08"
             android:enabled="false"
             android:text="@string/submit"
             app:layout_constraintBottom_toBottomOf="@+id/next_question"
@@ -123,31 +123,27 @@
             android:id="@+id/next_question"
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:enabled="false"
             android:text="@string/next"
-            app:layout_constraintBottom_toTopOf="@+id/guideline4"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent=".08"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/submit_answers"
-            app:layout_constraintTop_toTopOf="@+id/guideline4" />
+            app:layout_constraintTop_toBottomOf="@id/time_taken" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_begin="700dp" />
 
         <Chronometer
             android:id="@+id/time_taken"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:textSize="24sp"
+            android:textSize="30dp"
+            android:layout_marginTop="10dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent=".10"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/quiz_recyclerView"
-            app:layout_constraintBottom_toTopOf="@+id/guideline4"/>
+            app:layout_constraintTop_toBottomOf="@+id/quiz_recyclerView" />
 
         <com.google.android.material.progressindicator.CircularProgressIndicator
             android:id="@+id/loading_circle"
