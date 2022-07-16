@@ -13,14 +13,10 @@
         <action
             android:id="@+id/next_page_quiz"
             app:destination="@id/quizFragment"
-            app:popUpTo="@id/quizFragment">
-        </action>
+            app:popUpTo="@id/quizFragment"
+            app:popUpToInclusive="false"></action>
 
-        <action
-            android:id="@+id/skip_results"
-            app:destination="@id/resultsFragment">
-        </action>
-       </fragment>
+    </fragment>
     <fragment
         android:id="@+id/quizFragment"
         android:name="com.example.android_quiz.views.QuizFragment"
@@ -33,7 +29,7 @@
         <action
             android:id="@+id/back_to_start"
             app:destination="@id/startFragment"
-            app:popUpTo="@id/quizFragment"
+            app:popUpTo="@id/startFragment"
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
