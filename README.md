@@ -20,6 +20,13 @@
 * Dagger-Hilt
 * Room
 
+
+<H3>Lesson Learned</H3>
+
+*MVVM
+*Recycler-View Pattern
+*Database integration
+
 <h1> Screenshots </h1>
 
 <div>
