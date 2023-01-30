@@ -23,9 +23,9 @@
 
 <H3>Lesson Learned</H3>
 
-*MVVM
-*Recycler-View Pattern
-*Database integration
+* MVVM
+* Recycler-View Pattern
+* Database Integration
 
 <h1> Screenshots </h1>
 
