@@ -8,7 +8,12 @@ plugins {
 
 def apikeyPropertiesFile = rootProject.file("apiKey.properties")
 def apikeyProperties = new Properties()
+
+// Load properties from the file
 apikeyProperties.load(new FileInputStream(apikeyPropertiesFile))
+
+// Access a property from the loaded properties
+def API_KEY = apikeyProperties.getProperty("API_KEY")
 
 android {
     compileSdkVersion 31
@@ -23,7 +28,7 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         //Api Key
-        buildConfigField("String", "APIKEY", apikeyProperties['APIKEY'])
+        buildConfigField("String", "APIKEY", API_KEY ?: "\"DefaultApiKey\"")
     }
 
     buildTypes {
@@ -43,6 +48,7 @@ android {
         viewBinding = true
         dataBinding = true
     }
+    namespace 'com.example.android_quiz'
 }
 
 dependencies {
@@ -82,3 +88,14 @@ dependencies {
 kapt {
     correctErrorTypes = true
 }
+
+// Print the file path to ensure it's correct
+println("API Key Properties File Path: $apikeyPropertiesFile")
+
+// Print the loaded properties to check if the file is being loaded correctly
+apikeyProperties.each { key, value ->
+    println("Property: $key = $value")
+}
+
+// Print the API key to check if it's being accessed correctly
+println("API_KEY: $API_KEY")

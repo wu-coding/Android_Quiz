@@ -1,6 +1,5 @@
 package com.example.android_quiz.repository
 
-import android.provider.Settings.Global.getString
 import androidx.sqlite.db.SimpleSQLiteQuery
 import com.example.android_quiz.BuildConfig
 import com.example.android_quiz.DAO.RecordDao
@@ -10,7 +9,6 @@ import com.example.android_quiz.models.*
 import com.example.android_quiz.utils.addQueryParam
 import java.util.*
 import javax.inject.Inject
-import com.example.android_quiz.R
 
 class QuizDataRepository @Inject constructor(
     private val dataBase: Database,
@@ -118,7 +116,7 @@ class QuizDataRepository @Inject constructor(
             "tags" to userPrefData.category!!,
             "difficulty" to userPrefData.difficulty!!,
             "limit" to userPrefData.question_amount.toString(),
-            "apiKey" to BuildConfig.APIKEY
+            "apiKey" to BuildConfig.API_KEY.orEmpty()
         )
     }
 
